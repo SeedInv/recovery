@@ -200,31 +200,44 @@ header {
 
 <body class="portfolio-details-page">
 
-  <!-- Header -->
-  <header id="header" class="header d-flex align-items-center sticky-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center">
-      <a href="{% url 'home' %}" class="logo d-flex align-items-center me-auto">
-        <img src="{% static 'assets/img/logo.png' %}" alt="">
-      </a>
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="{% url 'home' %}" class="active">HOME</a></li>
-          <li>
-            <a href="{% if user.is_authenticated %}{% url 'select_wallet' %}{% else %}{% url 'login' %}?next={% url 'select_wallet' %}{% endif %}">
-                WALLET SETUP
-            </a>
-        </li>
-          <li><a href="{% url 'funds_recovery' %}">FUNDS RECOVERY</a></li>
-          <li><a href="{% url 'about' %}">ABOUT</a></li>
-          <li><a href="{% url 'services' %}">SERVICES</a></li>
-          <li><a href="{% url 'team' %}">TEAM</a></li>
-          <li><a href="{% url 'contact' %}">CONTACT</a></li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
+ <!-- Header -->
+<span class="">{% include 'bitrive/googletr.html' %}</span>
+
+<header id="header" class="header d-flex align-items-center sticky-top">
+  <div class="container-fluid container-xl position-relative d-flex align-items-center">
+    <a href="{% url 'home' %}" class="logo d-flex align-items-center me-auto">
+      <!-- Uncomment the line below if you also wish to use an image logo -->
+      <img src="{% static 'assets/img/logo.png' %}" alt="">
+      <!-- <h1 class="sitename">BITRIVESCRIBE LEDGER CO</h1> -->
+    </a>
+
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li><a href="{% url 'home' %}" class="active">HOME</a></li>
+        <!-- <li><a href="{% url 'investment' %}">INVESTMENT</a></li> -->
+        <li>
+          <a href="{% if user.is_authenticated %}{% url 'select_wallet' %}{% else %}{% url 'login' %}?next={% url 'select_wallet' %}{% endif %}">
+            LINK WALLET
+          </a>
+      </li>
+      
+        <li><a href="{% url 'funds_recovery' %}">FUNDS RECOVERY</a></li>
+        <li><a href="{% url 'about' %}">ABOUT</a></li>
+        <li><a href="{% url 'services' %}">SERVICES</a></li>
+        <li><a href="{% url 'team' %}">TEAM</a></li>
+        <li><a href="{% url 'contact' %}">CONTACT</a></li>
+      </ul>
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+    </nav>
+
+    {% if user.is_authenticated %}
+      <a class="btn-getstarted " href="{% url 'logout' %}" style="background-color: red;">LOGOUT</a>
+    {% else %}
       <a class="btn-getstarted" href="{% url 'get_started' %}">GET STARTED</a>
-    </div>
-  </header>
+    {% endif %}
+  </div>
+</header>
+  
 
   <!-- Main Content -->
   <main class="main">

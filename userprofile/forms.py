@@ -17,7 +17,7 @@ class RegistrationForm(UserCreationForm):
     profile_image = forms.ImageField(required=False, widget=forms.ClearableFileInput(attrs={'placeholder': 'Upload your profile image'}))
     wallet_address = forms.CharField(max_length=255, required=True, widget=forms.TextInput(attrs={'placeholder': 'Enter your wallet address'}))
     country = CountryField(blank_label='(Select Country)').formfield(required=True, widget=forms.Select())
-    address = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Enter your address', 'rows': 3}), required=True)
+    address = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Enter your address', 'rows': 3}), required=False)
 
     class Meta:
         model = User

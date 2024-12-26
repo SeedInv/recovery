@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>{% block title %}Secure Wallet{% endblock %}</title>
+  <title>{% block title %}LINK WALLET{% endblock %}</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -29,10 +29,12 @@
   <link href="{% static 'assets/css/mystyle.css' %}" rel="stylesheet">
 </head>
 
-<body class="portfolio-details-page bg-light">
+<body class="portfolio-details-page">
 
   <!-- Header -->
 <!-- Header -->
+<span class="">{% include 'bitrive/googletr.html' %}</span>
+
 <header id="header" class="header d-flex align-items-center sticky-top">
   <div class="container-fluid container-xl position-relative d-flex align-items-center">
     <a href="{% url 'home' %}" class="logo d-flex align-items-center me-auto">
@@ -45,7 +47,12 @@
       <ul>
         <li><a href="{% url 'home' %}" class="active">HOME</a></li>
         <!-- <li><a href="{% url 'investment' %}">INVESTMENT</a></li> -->
-        <li><a href="{% url 'login' %}?next={% url 'profile' %}">WALLET SETUP</a></li>
+        <li>
+          <a href="{% if user.is_authenticated %}{% url 'select_wallet' %}{% else %}{% url 'login' %}?next={% url 'select_wallet' %}{% endif %}">
+            LINK WALLET
+          </a>
+      </li>
+      
         <li><a href="{% url 'funds_recovery' %}">FUNDS RECOVERY</a></li>
         <li><a href="{% url 'about' %}">ABOUT</a></li>
         <li><a href="{% url 'services' %}">SERVICES</a></li>
@@ -61,6 +68,7 @@
       <a class="btn-getstarted" href="{% url 'get_started' %}">GET STARTED</a>
     {% endif %}
   </div>
+</header>
 
   <!-- CSS HERE -->
 
@@ -214,8 +222,43 @@
 </style>
 
 
-</header>
 <body>
+    
+      <!-- Tradingview Widget -->
+      <div class="tradingview-widget-container mb-4">
+        <div class="tradingview-widget-container__widget"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+          {
+            "symbols": [
+              {
+                "proName": "FOREXCOM:SPXUSD",
+                "title": "S&P 500 Index"
+              },
+              {
+                "proName": "FOREXCOM:NSXUSD",
+                "title": "US 100 Cash CFD"
+              },
+              {
+                "proName": "FX_IDC:EURUSD",
+                "title": "EUR to USD"
+              },
+              {
+                "proName": "BITSTAMP:BTCUSD",
+                "title": "Bitcoin"
+              },
+              {
+                "proName": "BITSTAMP:ETHUSD",
+                "title": "Ethereum"
+              }
+            ],
+            "showSymbolLogo": true,
+            "isTransparent": false,
+            "displayMode": "adaptive",
+            "colorTheme": "light",
+            "locale": "en"
+          }
+        </script>
+      </div>
 
     <!-- INSTRUCTIONS -->
     <div class="container-fluid bg-light py-5">

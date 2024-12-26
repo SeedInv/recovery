@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Translate Background</title>
+    <style>
+        /* Styling the container */
+        #google_translate_element {
+            background-color: #3d4d6a;
+        
+            /* border-radius: 8px; */
+            color: white; /* Text color for better contrast */
+            font-family: Arial, sans-serif;
+        }
+
+        /* Styling the dropdown */
+        #google_translate_element select {
+            background-color: white; /* Dropdown background */
+            color: #37517e; /* Text color inside the dropdown */
+            font-family: Arial, sans-serif;
+         
+            border: 2px solid #37517e; /* Border color matching the container */
+            /* border-radius: 5px; Smooth corners */
+           
+            cursor: pointer;
+        }
+
+        /* Adding a custom dropdown arrow */
+        #google_translate_element {
+            position: relative;
+        }
+
+ 
+    </style>
+</head>
+<body>
+    <div id="google_translate_element"></div>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>
