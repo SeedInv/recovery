@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>{% block title %}Account Statement{% endblock %}</title>
+
+  <!-- Favicons -->
+  {% load static %}
+  <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
+  <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="{% static 'assets/css/googlefonts.css' %}" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+</head>
+
+<!-- Navbar Section -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+  <div class="container">
+    <!-- Brand -->
+    <a class="navbar-brand" href="#">
+      <img src="{% static 'assets/img/favicon.png' %}" alt="Logo" style="width: 30px; height: 30px;">
+     Bitrivescribe Ledger Co.
+    </a>
+
+    <!-- Toggler for Mobile View -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar Links and Profile -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'home' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'account_statement' %}">Account Statement</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="">Transactions</a>
+        </li>
+      </ul>
+
+      <!-- Profile Section -->
+      <div class="d-flex align-items-center">
+        <a href="{% url 'profile' %}" class="text-decoration-none d-flex align-items-center">
+          {% if user_profile.profile_image %}
+          <img src="{{ user_profile.profile_image.url }}" alt="Profile Image" class="img-fluid rounded-circle"
+            style="width: 40px; height: 40px; border: 2px solid #ddd;">
+          {% else %}
+          <i class="bi bi-person-circle fs-3 text-secondary"></i>
+          {% endif %}
+          <span class="ms-2 text-dark">{{ user_profile.user.username }}</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<body>
+  <main class="main mt-0">
+    <!-- TradingView Ticker Widget -->
+<div class="tradingview-widget-container">
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js">
+  {
+    "symbols": [
+      {
+        "proName": "BITSTAMP:BTCUSD",
+        "title": "Bitcoin"
+      },
+      {
+        "proName": "BITSTAMP:ETHUSD",
+        "title": "Ethereum"
+      },
+      {
+        "proName": "BINANCE:DOGEUSD",
+        "title": "Dogecoin"
+      }
+    ],
+    "colorTheme": "dark",      <!-- Choose between "light" or "dark" themes -->
+    "isTransparent": false,   <!-- Set to true if you want a transparent background -->
+    "showSymbolLogo": true,   <!-- Show logos for each symbol -->
+    "locale": "en"            <!-- Locale for language (can be changed to other languages like "es" for Spanish) -->
+  }
+  </script>
+</div>
+
+    <h2 class="text-center pt-4">Account Statement</h2>
+
+    <!-- Display success message if available -->
+    {% if messages %}
+    <div class="alert alert-success">
+      <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    <!-- User Info, Balance, ROI, and Withdrawal -->
+    <div class="container">
+      <div class="d-flex justify-content-center align-items-center">
+        <div class="col-12 col-md-6">
+          <div class="card p-3 shadow-sm">
+            <!-- Profile Link -->
+           
+
+            <div class="pt-2">
+              <p class="bold">Username: <span class="text-success">{{ user_profile.user.username }}</span></p>
+              <p class="bold">Email: <span class="text-success">{{ user_profile.user.email }}</span></p>
+              <p>Wallet Address: <span class="text-success">{{ user_profile.wallet_address }}</span></p>
+              <p>Phone Number: <span class="text-success">{{ user_profile.phone_number }}</span></p>
+              <p>Balance: <span class="text-success">${{ user_profile.balance }}</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="text-center pt-4">ROI Transactions</h3>
+
+    <!-- ROI Transaction Table -->
+    <div class="container-fluid">
+      <div class="container shadow-sm">
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>Transaction Type</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for transaction in roi_transactions %}
+            <tr class="table-warning">
+              <td>{{ transaction.transaction_type }}</td>
+              <td>${{ transaction.amount }}</td>
+              <td>{{ transaction.status }}</td>
+              <td>{{ transaction.created_at }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        <h3 class="text-center pt-4">All Transactions</h3>
+
+        <!-- All Transaction Table -->
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>Transaction Type</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for transaction in transactions %}
+            <tr
+              class="{% if transaction.transaction_type == 'deposit' %}table-success{% elif transaction.transaction_type == 'withdrawal' %}table-danger{% elif transaction.transaction_type == 'roi' %}table-warning{% endif %}">
+              <td>{{ transaction.transaction_type }}</td>
+              <td>${{ transaction.amount }}</td>
+              <td>{{ transaction.status }}</td>
+              <td>{{ transaction.created_at }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Buttons for Deposit and Withdrawal -->
+    <div class="d-flex justify-content-center mb-4">
+      <a class="btn btn-success mx-2" href="{% url 'deposit' %}">Make a Deposit</a>
+      <a class="btn btn-danger mx-2" href="{% url 'withdrawal_request' %}">Make a Withdrawal Request</a>
+    </div>
+
+    <!-- Print Button -->
+    <div class="text-center mb-4">
+      <button class="btn btn-primary" onclick="printPage()">Print Statement</button>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer id="footer" class="footer">
+    
+  </footer>
+
+  <style>
+    @media print {
+      /* Hide the navbar and footer during print */
+      .navbar, .footer {
+        display: none;
+      }
+  
+      /* Ensure the user info and tables are visible */
+      .container, .container table, .container p {
+        visibility: visible;
+      }
+  
+      /* Optional: style the tables and content for printing */
+      .container table {
+        width: 100%;
+        border: 1px solid #000;
+        border-collapse: collapse;
+      }
+      .container table th, .container table td {
+        padding: 8px;
+        text-align: left;
+        border: 1px solid #ddd;
+      }
+  
+      /* Hide elements that are not needed during print */
+      .tradingview-widget-container, .d-flex.justify-content-center.mb-4, .btn {
+        display: none;
+      }
+    }
+  </style>
+  
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+  <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+
+  <!-- Main JS File -->
+  <script src="{% static 'assets/js/main.js' %}"></script>
+  <script>
+    function printPage() {
+      window.print(); // Trigger the print dialog
+    }
+  </script>
+
+
+</body>
+
+</html>

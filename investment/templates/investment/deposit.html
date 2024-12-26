@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>{% block title %}Deposite{% endblock %}</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+   {% load static %}
+  <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
+  <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="{% static 'assets/css/googlefonts.css' %}" rel="stylesheet">
+
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/css/mystyle.css' %}" rel="stylesheet">
+</head>
+
+<body class="portfolio-details-page">
+
+  <!-- Header -->
+<!-- Header -->
+<header id="header" class="header d-flex align-items-center sticky-top">
+  <div class="container-fluid container-xl position-relative d-flex align-items-center">
+    <a href="{% url 'home' %}" class="logo d-flex align-items-center me-auto">
+      <!-- Uncomment the line below if you also wish to use an image logo -->
+      <img src="{% static 'assets/img/logo.png' %}" alt="">
+      <!-- <h1 class="sitename">BITRIVESCRIBE LEDGER CO</h1> -->
+    </a>
+
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li><a href="{% url 'home' %}" class="active">HOME</a></li>
+        <li><a href="{% url 'investment' %}">INVESTMENT</a></li>
+        <li><a href="{% url 'funds_recovery' %}">FUNDS RECOVERY</a></li>
+        <li><a href="{% url 'about' %}">ABOUT</a></li>
+        <li><a href="{% url 'services' %}">SERVICES</a></li>
+        <li><a href="{% url 'team' %}">TEAM</a></li>
+        <li><a href="{% url 'contact' %}">CONTACT</a></li>
+      </ul>
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+    </nav>
+
+    {% if user.is_authenticated %}
+      <a class="btn-getstarted " href="{% url 'logout' %}" style="background-color: red;">LOGOUT</a>
+    {% else %}
+      <a class="btn-getstarted" href="{% url 'get_started' %}">GET STARTED</a>
+    {% endif %}
+  </div>
+</header>
+
+  <style>
+
+    body {
+        background-color: #f9fafc;
+        margin: 0;
+        padding: 0;
+    }
+
+    .deposit-form {
+        max-width: 500px;
+        margin: 50px auto;
+        background: #fff;
+        border-radius: 8px;
+        padding: 20px 30px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .deposit-form h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .form-control:focus {
+        box-shadow: none;
+        border-color: #6c63ff;
+    }
+
+    .btn-primary {
+        background-color: #6c63ff;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #5a54e0;
+    }
+
+    .link {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .link a {
+        color: #6c63ff;
+        text-decoration: none;
+    }
+
+    .link a:hover {
+        text-decoration: underline;
+    }
+
+    footer {
+        margin-top: 50px;
+        text-align: center;
+        padding: 10px 0;
+        background-color: #f1f1f1;
+        font-size: 14px;
+    }
+
+
+    .coin-address-list {
+display: flex;
+flex-wrap: wrap;
+gap: 20px;
+justify-content: center;
+}
+
+.coin {
+width: 250px;
+text-align: center;
+border: 1px solid #ddd;
+border-radius: 8px;
+padding: 20px;
+background-color: #f9f9f9;
+box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+cursor: pointer;
+}
+
+.coin h4 {
+font-size: 16px;
+margin: 10px 0;
+}
+
+.coin input {
+width: 100%;
+padding: 8px;
+margin-top: 10px;
+border: 1px solid #ccc;
+border-radius: 4px;
+}
+
+.coin img {
+width: 40px;
+height: 40px;
+margin-bottom: 10px;
+object-fit: contain;
+}
+
+.copy-notification {
+visibility: hidden;
+font-size: 14px;
+color: green;
+margin-top: 10px;
+font-weight: bold;
+transition: visibility 0.3s ease;
+}
+
+@media (max-width: 768px) {
+.coin {
+    width: 200px;
+}
+}
+
+@media (max-width: 480px) {
+.coin {
+    width: 100%;
+    max-width: 300px;
+}
+}
+
+
+
+</style>
+
+
+  {%block content%}
+
+        
+<div class="tradingview-widget-container">
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+    {
+    "symbols": [
+      {
+        "proName": "FOREXCOM:SPXUSD",
+        "title": "S&P 500 Index"
+      },
+      {
+        "proName": "FOREXCOM:NSXUSD",
+        "title": "US 100 Cash CFD"
+      },
+      {
+        "proName": "FX_IDC:EURUSD",
+        "title": "EUR to USD"
+      },
+      {
+        "proName": "BITSTAMP:BTCUSD",
+        "title": "Bitcoin"
+      },
+      {
+        "proName": "BITSTAMP:ETHUSD",
+        "title": "Ethereum"
+      }
+    ],
+    "showSymbolLogo": true,
+    "isTransparent": false,
+    "displayMode": "adaptive",
+    "colorTheme": "light",
+    "locale": "en"
+  }
+    </script>
+  </div>
+    <!-- TradingView Ticker Widget -->
+<div class="tradingview-widget-container">
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js">
+    {
+      "symbols": [
+        {
+          "proName": "BITSTAMP:BTCUSD",
+          "title": "Bitcoin"
+        },
+        {
+          "proName": "BITSTAMP:ETHUSD",
+          "title": "Ethereum"
+        },
+        {
+          "proName": "BINANCE:DOGEUSD",
+          "title": "Dogecoin"
+        }
+      ],
+      "colorTheme": "dark",      <!-- Choose between "light" or "dark" themes -->
+      "isTransparent": false,   <!-- Set to true if you want a transparent background -->
+      "showSymbolLogo": true,   <!-- Show logos for each symbol -->
+      "locale": "en"            <!-- Locale for language (can be changed to other languages like "es" for Spanish) -->
+    }
+    </script>
+  </div>
+
+   
+
+    <!-- Main Content -->
+    <div><h2 class="text-center mt-3" style="color: #3d4d6a;">Fund Investment Account</h2></div>
+    <div class="deposit-form">
+      <form method="POST" action="">
+          {% csrf_token %}
+          <div class="mb-3">
+              <label for="amount" class="form-label">Add Funds:</label>
+              <input type="number" name="amount" id="amount" step="0.01" class="form-control" placeholder="Enter amount" required>
+          </div>
+          <button type="submit" class="btn btn-primary w-100" style="background-color: #47b2e4;">Fund Now</button>
+      </form>
+      <div class="link">
+          <a href="{% url 'account_statement' %}">Go to Account Statement</a>
+      </div>
+  </div>
+
+  <div class="container-fluid my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10 col-sm-12">
+            <!-- Card for instructions -->
+            <div class="card shadow-lg p-4" style="border-radius: 10px; border: 1px solid #ddd;">
+              <h2 class="text-center mb-3" style="color: #47b2e4;">To make a deposit into your investment account:</h2>
+              <p class="bold"><b>INSTRUCTIONS:</b></p>
+                <ul class="list-unstyled" style="color: #555; font-size: 16px;">
+                    <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Click on the wallet address below to copy it to your clipboard.</li>
+                    <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Open your cryptocurrency wallet (e.g., MetaMask, Trust Wallet, or any other wallet you use).</li>
+                    <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Go to the "Send" or "Transfer" section of your wallet.</li>
+                    <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Paste the copied wallet address into the recipient's address field.</li>
+                    <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Enter the amount you wish to deposit. Make sure you're sending the correct cryptocurrency (e.g., Bitcoin, Ethereum, etc.).</li>
+                    <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Confirm all the details are correct, then submit the transaction.</li>
+                    <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Once the transaction is complete, the funds will appear in your account.</li>
+                </ul>
+                <p class="text-center text-muted mt-3">Please double-check the wallet address and the cryptocurrency you're sending to avoid any errors. If you're unsure, please contact support for assistance.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+ 
+      <!-- TRANSACTION INSTRUCTIONS -->
+
+
+    <h2 class="text-center  mb-4"  style="color: #47b2e4;">Click to Copy Your Wallet Address for Deposit</h2>
+    <div class="coin-address-list mb-4 pt-4">
+      <div class="coin" id="solana" onclick="copyAddress('SOL-WALLET-ADDRESS-HERE', 'solana')">
+        <img src="{% static 'assets/img/coin-logo/solan.jpg' %}" alt="Solana" class="coin-image" style=" border-radius: 10px;">
+
+          <h4>Solana (SOL)</h4>
+          <input type="text" value="SOL-WALLET-ADDRESS-HERE" readonly>
+          <span class="copy-notification" id="solana-notification">Copied!</span>
+      </div>
+      <div class="coin" id="ethereum" onclick="copyAddress('ETH-WALLET-ADDRESS-HERE', 'ethereum')">
+          <img src="{% static 'assets/img/coin-logo/eltlogo.jpg' %}" alt="Ethereum" class="coin-image">
+          <h4>Ethereum (ETH)</h4>
+          <input type="text" value="ETH-WALLET-ADDRESS-HERE" readonly>
+          <span class="copy-notification" id="ethereum-notification">Copied!</span>
+      </div>
+      <div class="coin" id="bitcoin" onclick="copyAddress('BTC-WALLET-ADDRESS-HERE', 'bitcoin')">
+          <img src="{% static 'assets/img/coin-logo/btclogo.avif' %}" alt="Bitcoin" class="coin-image">
+          <h4>Bitcoin (BTC)</h4>
+          <input type="text" value="BTC-WALLET-ADDRESS-HERE" readonly>
+          <span class="copy-notification" id="bitcoin-notification">Copied!</span>
+      </div>
+      <div class="coin" id="usdt" onclick="copyAddress('USDT-WALLET-ADDRESS-HERE', 'usdt')">
+          <img src="{% static 'assets/img/coin-logo/tether.jpeg' %}" alt="Tether" class="coin-image">
+          <h4>Tether (USDT)</h4>
+          <input type="text" value="USDT-WALLET-ADDRESS-HERE" readonly>
+          <span class="copy-notification" id="usdt-notification">Copied!</span>
+      </div>
+      <div class="coin" id="usdc" onclick="copyAddress('USDC-WALLET-ADDRESS-HERE', 'usdc')">
+          <img src="{% static 'assets/img/coin-logo/usdc.avif' %}" alt="USD Coin" class="coin-image">
+          <h4>USD Coin (USDC)</h4>
+          <input type="text" value="USDC-WALLET-ADDRESS-HERE" readonly>
+          <span class="copy-notification" id="usdc-notification">Copied!</span>
+      </div>
+  </div>
+    
+    
+    <div class="container-fluid">
+        <!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async>
+    {
+    "width": "100%",
+    "height": 550,
+    "defaultColumn": "overview",
+    "screener_type": "crypto_mkt",
+    "displayCurrency": "BTC",
+    "colorTheme": "light",
+    "locale": "en",
+    "isTransparent": false
+  }
+    </script>
+  </div>
+  <!-- TradingView Widget END -->
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2024 Bitrivescribe Ledger Co. | All Rights Reserved.
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS -->
+<script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+
+    <script>
+
+// Function to copy wallet address to clipboard
+function copyAddress(walletAddress, coinId) {
+    // Copy the wallet address to clipboard
+    navigator.clipboard.writeText(walletAddress).then(() => {
+        // Show "Copied!" message
+        const notification = document.getElementById(`${coinId}-notification`);
+        notification.style.visibility = 'visible';
+
+        // Hide "Copied!" message after 2 seconds
+        setTimeout(() => {
+            notification.style.visibility = 'hidden';
+        }, 2000);
+    }).catch(err => {
+        console.error('Error copying text: ', err);
+    });
+}
+
+
+    </script>
+
+  {%endblock%}
+
+
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+  <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+  <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/waypoints/noframework.waypoints.js' %}"></script>
+  <script src="{% static 'assets/vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+  
+  <!-- Main JS File -->
+  <script src="{% static 'assets/js/main.js' %}"></script>
+  
+</body>
+
+</html>

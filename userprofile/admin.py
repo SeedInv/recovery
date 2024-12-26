@@ -1,0 +1,81 @@
+# from django.contrib import admin
+# from .models import UserProfile
+
+# class UserProfileAdmin(admin.ModelAdmin):
+#     # Add 'phone_number' to the list_display
+#     list_display = ('get_full_name', 'email', 'phone_number', 'country', 'wallet_address')
+
+#     # Custom method to display full name (combining first and last name)
+#     def get_full_name(self, obj):
+#         return f"{obj.user.first_name} {obj.user.last_name}"
+#     get_full_name.admin_order_field = 'user__first_name'  # Enables sorting by full name
+#     get_full_name.short_description = 'Full Name'  # Column header text
+
+#     # Add search functionality for the phone number
+#     search_fields = ('user__username', 'user__first_name', 'user__last_name', 'email', 'wallet_address', 'phone_number')
+
+#     # Filter by country (optional)
+#     list_filter = ('country',)
+
+#     # Editable fields in the list view (optional)
+#     list_editable = ('email', 'phone_number', 'country', 'wallet_address')
+
+#     # Define the fields for the detailed profile view in the admin
+#     fieldsets = (
+#         (None, {
+#             'fields': ('user', 'phone_number', 'profile_image', 'wallet_address', 'email', 'country', 'address')
+#         }),
+#     )
+
+# # Register the UserProfile model with the custom admin class
+# admin.site.register(UserProfile, UserProfileAdmin)
+
+
+from django.contrib import admin
+from .models import UserProfile
+from django.utils.html import format_html
+
+@admin.register(UserProfile)
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = (
+        'get_username', 
+        'get_email', 
+        'get_first_name', 
+        'get_last_name', 
+        'phone_number', 
+        'wallet_address', 
+        'country', 
+        'address', 
+        'profile_image_preview'  # This will display the profile image
+    )
+    search_fields = ('user__username', 'user__email', 'phone_number', 'wallet_address')
+    
+    # Make these fields editable in the list view
+    list_editable = ('phone_number', 'wallet_address', 'country', 'address')
+
+    def get_username(self, obj):
+        return obj.user.username
+    get_username.short_description = 'Username'
+
+    def get_email(self, obj):
+        return obj.user.email
+    get_email.short_description = 'Email'
+
+    def get_first_name(self, obj):
+        return obj.user.first_name
+    get_first_name.short_description = 'First Name'
+
+    def get_last_name(self, obj):
+        return obj.user.last_name
+    get_last_name.short_description = 'Last Name'
+
+    # Method to display the profile image in the list view
+    def profile_image_preview(self, obj):
+        if obj.profile_image:
+            return format_html('<img src="{}" width="50" height="50" />', obj.profile_image.url)
+        return "No image"
+    profile_image_preview.short_description = 'Profile Image'
+
+    # Optionally you can override the image field widget if necessary
+    # formfield_overrides is typically used for changing field widgets in forms.
+    # But it's not necessary here unless you're specifically customizing field rendering.

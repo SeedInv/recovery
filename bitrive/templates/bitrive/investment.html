@@ -1,0 +1,308 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>{% block title %}Investment{% endblock %}</title>
+  <meta name="description" content="">
+  <meta name="keywords" content=""> -->
+
+  <!-- Favicons -->
+   <!-- {% load static %}
+  <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
+  <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon"> -->
+
+  <!-- Fonts -->
+  <!-- <link href="{% static 'assets/css/googlefonts.css' %}" rel="stylesheet"> -->
+
+
+  <!-- Vendor CSS Files -->
+  <!-- <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet"> -->
+
+  <!-- Main CSS File -->
+  <!-- <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/css/mystyle.css' %}" rel="stylesheet">
+</head> -->
+
+<!-- <body class="portfolio-details-page"> -->
+
+<!-- Header -->
+<!-- <header id="header" class="header d-flex align-items-center sticky-top">
+  <div class="container-fluid container-xl position-relative d-flex align-items-center">
+    <a href="{% url 'home' %}" class="logo d-flex align-items-center me-auto"> -->
+      <!-- Uncomment the line below if you also wish to use an image logo -->
+      <!-- <img src="{% static 'assets/img/logo.png' %}" alt=""> -->
+      <!-- <h1 class="sitename">BITRIVESCRIBE LEDGER CO</h1> -->
+    <!-- </a> -->
+
+    <!-- <nav id="navmenu" class="navmenu">
+      <ul>
+        <li><a href="{% url 'home' %}" class="active">HOME</a></li>
+        <li><a href="{% url 'investment' %}">INVESTMENT</a></li>
+        <li><a href="{% url 'funds_recovery' %}">FUNDS RECOVERY</a></li>
+        <li><a href="{% url 'about' %}">ABOUT</a></li>
+        <li><a href="{% url 'services' %}">SERVICES</a></li>
+        <li><a href="{% url 'team' %}">TEAM</a></li>
+        <li><a href="{% url 'contact' %}">CONTACT</a></li>
+      </ul>
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+    </nav>
+
+    {% if user.is_authenticated %}
+      <a class="btn-getstarted " href="{% url 'logout' %}" style="background-color: red;">LOGOUT</a>
+    {% else %}
+      <a class="btn-getstarted" href="{% url 'get_started' %}">GET STARTED</a>
+    {% endif %}
+  </div>
+</header> -->
+
+
+
+  <!-- Main Content -->
+  <!-- <main class="main"> -->
+    <!-- {% block content %} -->
+<!-- Pricing Section -->
+<!-- <section id="pricing" class="pricing section light-background"> -->
+
+  <!-- Section Title -->
+  <!-- <div class="container section-title" data-aos="fade-up">
+    <h2>INVEST NOW</h2>
+    <p>Earn Consistent, Passive Income with Our Expertly Managed Investment Plans</p>
+  </div>End Section Title -->
+
+  <!-- <div class="container">
+    <div class="row gy-4"> -->
+
+      <!-- Basic Plan -->
+      <!-- <div class="col-lg-4" data-aos="zoom-in" data-aos-delay="100">
+        <div class="pricing-item">
+          <h3>BASIC PLAN</h3>
+          <h4><sup></sup>25.2%<span> / monthly return</span></h4>
+          <ul>
+            <li><i class="bi bi-check"></i> <span>Daily Profit: <b>0.84%</b></span></li>
+            <li><i class="bi bi-check"></i><span>Minimum: <b>$200.00</b></span></li>
+            <li><i class="bi bi-check"></i> <span>Maximum: <b>$4,999.00</b></span></li>
+            <li class="bi"><i class="bi bi-check"></i> <span>Contract Duration: <b>7 days</b></span></li>
+            <li class="bi"><i class="bi bi-check"></i> <span>Total Return on Investment: <b>48%</b></span></li>
+          </ul>
+          <a href="{% if user.is_authenticated %}{% url 'create_investment' %}{% else %}{% url 'get_started' %}{% endif %}" class="buy-btn">
+            Invest Now
+          </a>
+        </div>
+      </div>End Pricing Item -->
+
+      <!-- Silver Plan -->
+      <!-- <div class="col-lg-4" data-aos="zoom-in" data-aos-delay="200">
+        <div class="pricing-item featured">
+          <h3>SILVER PLAN</h3>
+          <h4><sup></sup>39%<span> / monthly return</span></h4>
+          <ul>
+            <li><i class="bi bi-check"></i> <span>Daily Profit: <b>1.3%</b></span></li>
+            <li><i class="bi bi-check"></i><span>Minimum: <b>$500.00</b></span></li>
+            <li><i class="bi bi-check"></i> <span>Maximum: <b>$4,000.00</b></span></li>
+            <li class="bi"><i class="bi bi-check"></i> <span>Contract Duration: <b>14 days</b></span></li>
+            <li class="bi"><i class="bi bi-check"></i> <span>Total Return on Investment: <b>48%</b></span></li>
+          </ul>
+          <a href="{% if user.is_authenticated %}{% url 'create_investment' %}{% else %}{% url 'get_started' %}{% endif %}" class="buy-btn">
+            Invest Now
+          </a>
+        </div>
+      </div>End Pricing Item -->
+
+      <!-- Gold Plan -->
+      <!-- <div class="col-lg-4" data-aos="zoom-in" data-aos-delay="300">
+        <div class="pricing-item">
+          <h3>GOLD PLAN</h3>
+          <h4><sup></sup>40.2%<span> / monthly return</span></h4>
+          <ul>
+            <li><i class="bi bi-check"></i> <span>Daily Profit: <b>1.3%</b></span></li>
+            <li><i class="bi bi-check"></i><span>Minimum: <b>$25,000.00</b></span></li>
+            <li><i class="bi bi-check"></i> <span>Maximum: <b>$49,999.00</b></span></li>
+            <li class="bi"><i class="bi bi-check"></i> <span>Contract Duration: <b>21 days</b></span></li>
+            <li class="bi"><i class="bi bi-check"></i> <span>Total Return on Investment: <b>48%</b></span></li>
+          </ul>
+          <a href="{% if user.is_authenticated %}{% url 'create_investment' %}{% else %}{% url 'get_started' %}{% endif %}" class="buy-btn">
+            Invest Now
+          </a>
+        </div>
+      </div>End Pricing Item -->
+
+    <!-- </div>/row -->
+  <!-- </div>/container -->
+
+  <!-- <div class="container pt-4">
+    <div class="row gy-4"> -->
+
+      <!-- Platinum Plan -->
+      <!-- <div class="col-lg-4" data-aos="zoom-in" data-aos-delay="100">
+        <div class="pricing-item">
+          <h3>PLATINUM PLAN</h3>
+          <h4><sup></sup>56.1%<span> / monthly return</span></h4>
+          <ul>
+            <li><i class="bi bi-check"></i> <span>Daily Profit: <b>1.87%</b></span></li>
+            <li><i class="bi bi-check"></i><span>Minimum: <b>$50,000.00</b></span></li>
+            <li><i class="bi bi-check"></i> <span>Maximum: <b>$99,999.00</b></span></li>
+            <li class="bi"><i class="bi bi-check"></i> <span>Contract Duration: <b>28 days</b></span></li>
+            <li class="bi"><i class="bi bi-check"></i> <span>Total Return on Investment: <b>48%</b></span></li>
+          </ul>
+          <a href="{% if user.is_authenticated %}{% url 'create_investment' %}{% else %}{% url 'get_started' %}{% endif %}" class="buy-btn">
+            Invest Now
+          </a>
+        </div>
+      </div>End Pricing Item -->
+
+      <!-- Diamond Plan -->
+      <!-- <div class="col-lg-4" data-aos="zoom-in" data-aos-delay="200">
+        <div class="pricing-item featured">
+          <h3>DIAMOND PLAN</h3>
+          <h4><sup></sup>60%<span> / monthly return</span></h4>
+          <ul>
+            <li><i class="bi bi-check"></i> <span>Daily Profit: <b>2.0%</b></span></li>
+            <li><i class="bi bi-check"></i><span>Minimum: <b>$100,000.00</b></span></li>
+            <li><i class="bi bi-check"></i> <span>Maximum: <b>$499,999.00</b></span></li>
+            <li class="bi"><i class="bi bi-check"></i> <span>Contract Duration: <b>35 days</b></span></li>
+            <li class="bi"><i class="bi bi-check"></i> <span>Total Return on Investment: <b>48%</b></span></li>
+          </ul>
+          <a href="{% if user.is_authenticated %}{% url 'create_investment' %}{% else %}{% url 'get_started' %}{% endif %}" class="buy-btn">
+            Invest Now
+          </a>
+        </div>
+      </div>End Pricing Item -->
+
+      <!-- Ultimate Plan -->
+      <!-- <div class="col-lg-4" data-aos="zoom-in" data-aos-delay="300">
+        <div class="pricing-item">
+          <h3>ULTIMATE PLAN</h3>
+          <h4><sup>$</sup>75%<span> / monthly return</span></h4>
+          <ul>
+            <li><i class="bi bi-check"></i> <span>Daily Profit: <b>2.5%</b></span></li>
+            <li><i class="bi bi-check"></i><span>Minimum: <b>$500,000.00</b></span></li>
+            <li><i class="bi bi-check"></i> <span>Maximum: <b>$1,000,000.00</b></span></li>
+            <li class="bi"><i class="bi bi-check"></i> <span>Contract Duration: <b>42 days</b></span></li>
+            <li class="bi"><i class="bi bi-check"></i> <span>Total Return on Investment: <b>48%</b></span></li>
+          </ul>
+          <a href="{% if user.is_authenticated %}{% url 'create_investment' %}{% else %}{% url 'get_started' %}{% endif %}" class="buy-btn">
+            Invest Now
+          </a>
+        </div>
+      </div>End Pricing Item -->
+
+    <!-- </div>/row -->
+  <!-- </div>/container -->
+
+<!-- </section>/Pricing Section -->
+
+
+    <!-- {% endblock %}
+  </main> -->
+
+  <!-- Footer -->
+  <!-- <footer id="footer" class="footer">
+
+    <div class="footer-newsletter">
+      <div class="container">
+        <div class="row justify-content-center text-center">
+          <div class="col-lg-6">
+            <h4>Receive Expert Investment Updates</h4>
+            <p>Subscribe for the latest market insights, tips, and investment strategies to help you stay informed and make smarter decisions.
+            </p>
+            <form action="forms/newsletter.php" method="post" class="php-email-form">
+              <div class="newsletter-form"><input type="email" name="email"><input type="submit" value="Subscribe"></div>
+              <div class="loading">Loading</div>
+              <div class="error-message"></div>
+              <div class="sent-message">Your subscription request has been sent. Thank you!</div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-lg-4 col-md-6 footer-about">
+          <a href="index.html" class="d-flex align-items-center">
+            <span class="sitename">BITRIVESCRIBE</span>
+          </a>
+          <div class="footer-contact pt-3">
+            <p>A108 Adam Street</p>
+            <p>New York, NY 535022</p>
+            <p class="mt-3"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
+            <p><strong>Email:</strong> <span>info@example.com</span></p>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Navigate</h4>
+          <ul>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Home</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">About us</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Services</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Team</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Our Services</h4>
+          <ul>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Investment Tracking</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Multi-Signature Wallet</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Hardware Wallet</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Goal-Based Planning</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-4 col-md-12">
+          <h4>Follow Us</h4>
+          <p>Stay updated with the latest from Bitrivescribe Ledger Co. Follow us for insights and news on digital assets and blockchain.</p>
+          <div class="social-links d-flex">
+            <a href=""><i class="bi bi-twitter-x"></i></a>
+            <a href=""><i class="bi bi-facebook"></i></a>
+            <a href=""><i class="bi bi-instagram"></i></a>
+            <a href=""><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="container copyright text-center mt-4">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">Bitrivescribe Ledger Co</strong> <span>All Rights Reserved</span></p>
+      <div class="credits">
+        Designed by <a href="#">Bitrivescribe-Tech</a>
+      </div>
+   </div>
+   
+  </footer> -->
+
+  <!-- Scroll Top -->
+  <!-- <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a> -->
+
+
+  <!-- TELEGRAM CHAT BUTTON -->
+
+  <!-- {% include 'bitrive/telegram_button.html' %} -->
+  
+  <!-- Preloader -->
+  <!-- <div id="preloader"></div> -->
+
+  <!-- Vendor JS Files -->
+  <!-- <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+  <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+  <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/waypoints/noframework.waypoints.js' %}"></script>
+  <script src="{% static 'assets/vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+   -->
+  <!-- Main JS File -->
+  <!-- <script src="{% static 'assets/js/main.js' %}"></script> -->
+  
+<!-- </body>
+
+</html> -->

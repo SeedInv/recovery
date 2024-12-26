@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>{% block title %}My Dashboard{% endblock %}</title>
+
+  <!-- Favicons -->
+  {% load static %}
+  <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
+  <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="{% static 'assets/css/googlefonts.css' %}" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+
+  <style>
+    /* Sidebar styles */
+    #sidebar {
+      width: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background-color: #3d4d6a;
+      overflow-x: hidden;
+      transition: 0.3s;
+      z-index: 9999;
+    }
+
+    #sidebar ul {
+      padding: 20px;
+    }
+
+    #sidebar ul li {
+      margin-bottom: 10px;
+    }
+
+    /* Overlay style */
+    #overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 9998;
+    }
+
+    /* Sidebar links */
+    #sidebar a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      display: block;
+      padding: 10px;
+    }
+
+    /* Close button for the sidebar */
+    .close-btn {
+      color: white;
+      font-size: 36px;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* Main content adjustments */
+    #main-content {
+      transition: margin-left 0.3s;
+      padding-left: 0;
+    }
+
+    /* Make sure the menu button is visible in the top bar */
+    .open-menu-btn {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .open-menu-btn:hover {
+      background-color: #0056b3;
+    }
+
+    /* Centering content */
+    .content-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* User Info Card Centering */
+    .user-info-card {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-width: 600px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* Adjust card-container for responsive design */
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center; /* Centering the cards */
+    }
+
+    .card-item {
+      flex: 1 1 100%; /* Default for small screens */
+      margin: 10px;
+    }
+
+    @media (min-width: 576px) {
+      .card-item {
+        flex: 1 1 45%; /* Two columns for medium screens and up */
+      }
+    }
+
+    @media (min-width: 768px) {
+      .card-item {
+        flex: 1 1 30%; /* Three columns for large screens */
+      }
+    }
+
+    @media (min-width: 992px) {
+      .card-item {
+        flex: 1 1 22%; /* Four columns for extra large screens */
+      }
+    }
+
+  /* Hover effect for the list items */
+  .list-unstyled li {
+    transition: background-color 0.3s ease, color 0.3s ease, padding-left 0.3s ease;
+  }
+
+  /* On hover: Background color and text color change */
+  .list-unstyled li:hover {
+    background-color: #f9faf89a; /* Light background on hover */
+    color: #28a745; /* Success green text color on hover */
+    padding-left: 20px; /* Add some padding on the left for a sliding effect */
+    border-radius: 10px;
+  }
+
+  /* On hover: Change text color for links */
+  .list-unstyled li:hover a {
+    color: #28a745; /* Change link text to green on hover */
+  }
+
+  /* Optional: Hover effect for the icons */
+  .list-unstyled li:hover i {
+    color: #28a745; /* Change icon color to green on hover */
+  }
+
+  /* Smooth hover-out transition */
+  .list-unstyled li {
+    transition: background-color 0.3s ease-out, color 0.3s ease-out, padding-left 0.3s ease-out;
+  }
+
+
+
+
+
+    /* Profile Image Styling */
+    .profile-img {
+      object-fit: cover;
+      border-radius: 50%;
+      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Profile image in navbar (smaller size) */
+    .profile-img-navbar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    /* Profile image under "Welcome" (larger size) */
+    .profile-img-welcome {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 5px solid #fff;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+
+
+
+</style>
+    
+
+  <script>
+    // Open the sidebar
+    function openNav() {
+      document.getElementById("sidebar").style.width = "250px";
+      document.getElementById("main-content").style.marginLeft = "250px";
+      document.getElementById("overlay").style.display = "block";
+    }
+
+    // Close the sidebar
+    function closeNav() {
+      document.getElementById("sidebar").style.width = "0";
+      document.getElementById("main-content").style.marginLeft = "0";
+      document.getElementById("overlay").style.display = "none";
+    }
+  </script>
+</head>
+
+<body class="portfolio-details-page" style="background-color: #f0f0f0;">
+
+
+
+  <!-- Overlay to cover the page when the sidebar is open -->
+  <div id="overlay" onclick="closeNav()"></div>
+<!-- Sidebar/Nav -->
+<div id="sidebar" class="sidebar text-white">
+  <button class="close-btn btn" onclick="closeNav()">×</button>
+  <ul class="list-unstyled p-4">
+      <li class="border-bottom mb-2 pb-2">
+        <a href="#" class="d-flex align-items-center">
+          <i class="bi bi-house-door me-2"></i> Dashboard
+        </a>
+      </li>
+      <li class="border-bottom mb-2 pb-2">
+        <a href="#" class="d-flex align-items-center">
+          <i class="bi bi-person-circle me-2"></i> Profile
+        </a>
+      </li>
+      <li class="border-bottom mb-2 pb-2">
+        <a href="{% url 'recovery:form' %}" class="d-flex align-items-center">
+          <i class="bi bi-shield-lock me-2"></i> Recovery
+        </a>
+      </li>
+      <li class="border-bottom mb-2 pb-2">
+        <a href="{% url 'create_investment' %}" class="d-flex align-items-center">
+          <i class="bi bi-graph-up-arrow me-2"></i> Create Investment
+        </a>
+      </li>
+      <li class="border-bottom mb-2 pb-2">
+        <a href="{% url 'deposit' %}" class="d-flex align-items-center">
+          <i class="bi bi-arrow-up-right-circle me-2"></i> Deposit
+        </a>
+      </li>
+      <li class="border-bottom mb-2 pb-2">
+        <a href="{% url 'withdrawal_request' %}" class="d-flex align-items-center">
+          <i class="bi bi-arrow-down-right-circle me-2"></i> Withdraw
+        </a>
+      </li>
+      <li class="border-bottom mb-2 pb-2">
+        <a href="{% url 'account_statement' %}" class="d-flex align-items-center">
+          <i class="bi bi-credit-card-2-front me-2"></i> Transactions
+        </a>
+      </li>
+      <li class="border-bottom mb-2 pb-2">
+        <a href="{% url 'select_wallet' %}" class="d-flex align-items-center">
+          <!-- Link content here -->
+      </a>
+      
+          <i class="bi bi-link-45deg me-2"></i> Link Wallet
+        </a>
+      </li>
+  </ul>
+</div>
+
+
+
+  <!-- Main Content -->
+  <div id="main-content" class="main mt-0">
+    <!-- Header with a button to open the sidebar -->
+    <header id="header" class="header d-flex align-items-center sticky-top">
+      <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+        <!-- Button to open the sidebar -->
+        <button class="btn open-menu-btn me-4" onclick="openNav()">☰ Menu</button>
+    
+        <!-- Logout Button, placed with more space from Open Menu -->
+        <a class="btn btn-danger me-4" href="{% url 'logout' %}">Logout</a>
+    
+        <!-- Home Button (New Button for homepage) -->
+        <a class="btn btn-secondary me-4" href="{% url 'home' %}">Home</a> <!-- Adjusted margin -->
+    
+        <!-- Profile Image Section, aligned to the right with "Welcome" and username -->
+      <div class="d-flex align-items-center justify-content-end ms-auto">
+          {% if user_profile.profile_image %}
+            <div class="d-flex align-items-center me-2">
+              <h6 class="mb-0 me-2">{{ user_profile.user.username }}</h6>
+              <img src="{{ user_profile.profile_image.url }}" alt="Profile Image" class="img-fluid profile-img-navbar">
+            </div>
+          {% else %}
+            <p>No profile image available</p>
+          {% endif %}
+        </div>
+      </div>
+      </div>
+    </header>
+    
+      
+      
+
+    {% block content %}
+    <!-- Tradingview Widget -->
+    <div class="tradingview-widget-container mb-4">
+      <div class="tradingview-widget-container__widget"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+        {
+          "symbols": [
+            {
+              "proName": "FOREXCOM:SPXUSD",
+              "title": "S&P 500 Index"
+            },
+            {
+              "proName": "FOREXCOM:NSXUSD",
+              "title": "US 100 Cash CFD"
+            },
+            {
+              "proName": "FX_IDC:EURUSD",
+              "title": "EUR to USD"
+            },
+            {
+              "proName": "BITSTAMP:BTCUSD",
+              "title": "Bitcoin"
+            },
+            {
+              "proName": "BITSTAMP:ETHUSD",
+              "title": "Ethereum"
+            }
+          ],
+          "showSymbolLogo": true,
+          "isTransparent": false,
+          "displayMode": "adaptive",
+          "colorTheme": "light",
+          "locale": "en"
+        }
+      </script>
+    </div>
+
+    <!-- Profile and User Info Section -->
+    <div class="content-wrapper">
+        <h1 class="text-center mb-4">Digital Asset Management Dashboard</h1>
+        <div class="text-center">
+            {% if user_profile.profile_image %}
+            <img src="{{ user_profile.profile_image.url }}" alt="Profile Image" class="profile-img-welcome mb-2">
+            {% else %}
+            <p>No profile image available</p>
+            {% endif %}
+          </div>
+          <div class="ms-3">
+            <h3 class="mb-0">Welcome, {{ user_profile.user.username }}</h3>
+          </div>
+    
+      <div class="user-info-card card p-3 shadow-sm">
+        <div class="container d-flex align-items-center">
+          <!-- Profile Image Section -->
+          
+          <!-- Username Section -->
+         
+        </div>
+
+        <div class="pt-2">
+          <p class="bold">Username: <span class="text-success">{{ user_profile.user.username }}</span></p>
+          <p class="bold">Email: <span class="text-success">{{ user_profile.user.email }}</span></p>
+          <p>Wallet Address: <span class="text-success">{{ user_profile.wallet_address }}</span></p>
+          <p>Phone Number: <span class="text-success">{{ user_profile.phone_number }}</span></p>
+          <p>Balance: <span class="text-success">${{ user_profile.balance }}</span></p>
+        </div>
+      </div>
+<!-- User Stats -->
+<div class="card-container row gx-3">
+  <div class="card-item col-12 col-md-3">
+    <div class="card p-3 text-center bg-success text-white shadow" style="height: 150px; width: 100%;">
+      <i class="bi bi-bank fs-3 mb-2"></i>
+      <p class="mb-0 text-truncate" style="font-size: 13.85px;">Total Deposit: ${{ balance }}</p>
+    </div>
+  </div>
+
+  <div class="card-item col-12 col-md-3">
+    <div class="card p-3 text-center bg-warning text-dark shadow" style="height: 150px; width: 100%;">
+      <i class="bi bi-graph-up-arrow fs-3 mb-2"></i>
+      <p class="mb-0 text-truncate">Total ROI: ${{ total_roi }}</p>
+    </div>
+  </div>
+
+  <div class="card-item col-12 col-md-3">
+    <div class="card p-3 text-center bg-danger text-white shadow" style="height: 150px; width: 100%;">
+      <i class="bi bi-cash-coin fs-3 mb-2"></i>
+      <p class="mb-0 text-truncate">Withdrawal: ${{ withdrawal_amount }}</p>
+    </div>
+  </div>
+
+  <div class="card-item col-12 col-md-3">
+    <div class="card p-3 text-center bg-danger text-white shadow" style="height: 150px; width: 100%;">
+      <i class="bi bi-people fs-3 mb-2"></i>
+      <p class="mb-0 text-truncate">Referral Bonus: ${{ withdrawal_amount }}</p>
+    </div>
+  </div>
+</div>
+
+
+    <!-- Action Buttons for Deposit and Withdrawal -->
+    <div class="d-flex justify-content-center mb-4">
+      <a class="btn btn-success mx-2" href="{% url 'deposit' %}">Deposit</a>
+      <a class="btn btn-danger mx-2" href="{% url 'withdrawal_request' %}">Withdraw</a>
+    </div>
+    {% endblock %}
+  </div>
+
+  <!-- Footer -->
+  <footer id="footer" class="footer"></footer>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+  <!-- Main JS File -->
+  <script src="{% static 'assets/js/main.js' %}"></script>
+
+</body>
+
+</html>
+

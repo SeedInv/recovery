@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>{% block title %}Funds Recovery{% endblock %}</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  {% load static %}
+  <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
+  <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="{% static 'assets/css/googlefonts.css' %}" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/css/mystyle.css' %}" rel="stylesheet">
+
+  <style>
+    /* Glass effect for the form container */
+    .glass-effect {
+      background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+      backdrop-filter: blur(10px); /* Apply blur to create the glassy effect */
+      border-radius: 12px; /* Rounded corners */
+      padding: 20px; /* Reduced inner spacing */
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+      max-width: 450px; /* Limit width for aesthetics */
+      margin: 0 auto; /* Center the form */
+      border: 1px solid rgba(255, 255, 255, 0.2); /* Light border */
+    }
+
+    /* Make form fields fill available space */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 15px;
+    }
+
+    /* Form controls styling */
+    .form-control {
+      background-color: rgba(255, 255, 255, 0.3); /* Transparent background */
+      border: 1px solid rgba(255, 255, 255, 0.5); /* Subtle border */
+      color: #fff; /* White text color */
+      font-size: 16px; /* Comfortable font size */
+      padding: 10px 15px; /* Reduced padding */
+      border-radius: 8px; /* Rounded corners */
+      width: 100%; /* Full width */
+      margin-bottom: 10px; /* Reduced space between inputs */
+      transition: all 0.3s ease; /* Smooth transition */
+    }
+
+    .form-control::placeholder {
+      color: rgba(255, 255, 255, 0.7); /* Light placeholder color */
+    }
+
+    /* Input focus effect */
+    .form-control:focus {
+      border-color: #47b2e4; /* Blue border on focus */
+      background-color: rgba(255, 255, 255, 0.5); /* Slightly lighter background on focus */
+      outline: none; /* Remove default outline */
+    }
+
+    /* Button styling */
+    .btn-primary {
+      background-color: #47b2e4; /* Blue background */
+      color: #fff; /* White text */
+      padding: 12px 20px; /* Button padding */
+      border-radius: 8px; /* Rounded corners */
+      font-size: 16px; /* Button text size */
+      border: none; /* Remove border */
+      width: 100%; /* Full width */
+      cursor: pointer; /* Pointer cursor */
+      transition: all 0.3s ease; /* Smooth transition */
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3; /* Darker blue on hover */
+    }
+
+    /* Footer Styles */
+    #footer {
+      background-color: #ffffff; /* White background */
+      color: #333333; /* Dark text color */
+      padding: 40px 0;
+    }
+
+    .footer .footer-about a {
+      color: #333;
+      font-size: 24px;
+      text-decoration: none;
+      margin-bottom: 20px;
+    }
+
+    .footer-contact p,
+    .footer-contact a {
+      color: #777; /* Lighter color for contact information */
+    }
+
+    .footer-links a {
+      color: #777;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: #47b2e4;
+    }
+
+    .social-links a {
+      color: #777;
+      margin: 0 10px;
+      font-size: 18px;
+      transition: color 0.3s;
+    }
+
+    .social-links a:hover {
+      color: #47b2e4;
+    }
+
+    /* Scroll Top Button */
+    #scroll-top {
+      position: fixed;
+      bottom: 40px;
+      right: 40px;
+      background-color: #47b2e4;
+      color: white;
+      border-radius: 50%;
+      padding: 10px;
+      font-size: 18px;
+      cursor: pointer;
+      display: none;
+    }
+
+    #scroll-top:hover {
+      background-color: #0056b3;
+    }
+
+    /* Responsive design for smaller screens */
+    @media (max-width: 768px) {
+      .glass-effect {
+        padding: 15px; /* Further reduced padding for smaller screens */
+        margin: 20px; /* Add margin to avoid touching edges */
+      }
+
+      .form-group {
+        margin-bottom: 10px; /* Reduce margin between form groups on small screens */
+      }
+
+      /* Country dropdown */
+      .form-group select.form-control {
+        padding: 12px 15px; /* Adjust padding for select dropdown */
+      }
+
+      /* Make the form more responsive on mobile */
+      .form-control {
+        padding: 12px 15px; /* Larger padding for easier use on mobile */
+      }
+
+      .btn-primary {
+        font-size: 14px; /* Adjust button font size on smaller screens */
+      }
+    }
+
+    /* Remove extra space between header and login section */
+header {
+  margin-bottom: 0; /* Remove margin at the bottom of the header */
+  padding-bottom: 0; /* Reduce or remove padding at the bottom of the header */
+}
+
+/* Adjust margin for the login section */
+#call-to-action {
+  margin-top: -20px; /* Reduce the top margin (negative value to pull it up) */
+  padding-top: 30px; /* Adjust the padding at the top of the section if necessary */
+}
+
+/* Adjust any padding/margin for the card or inner container */
+.card {
+  margin-top: 0; /* Remove any extra margin at the top */
+}
+
+.card-body {
+  padding-top: 20px; /* Adjust the padding inside the card */
+}
+
+
+
+  </style>
+
+</head>
+
+<body class="portfolio-details-page">
+
+  <!-- Header -->
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+      <a href="{% url 'home' %}" class="logo d-flex align-items-center me-auto">
+        <img src="{% static 'assets/img/logo.png' %}" alt="">
+      </a>
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="{% url 'home' %}" class="active">HOME</a></li>
+          <li>
+            <a href="{% if user.is_authenticated %}{% url 'select_wallet' %}{% else %}{% url 'login' %}?next={% url 'select_wallet' %}{% endif %}">
+                WALLET SETUP
+            </a>
+        </li>
+          <li><a href="{% url 'funds_recovery' %}">FUNDS RECOVERY</a></li>
+          <li><a href="{% url 'about' %}">ABOUT</a></li>
+          <li><a href="{% url 'services' %}">SERVICES</a></li>
+          <li><a href="{% url 'team' %}">TEAM</a></li>
+          <li><a href="{% url 'contact' %}">CONTACT</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+      <a class="btn-getstarted" href="{% url 'get_started' %}">GET STARTED</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main">
+    {% block content %}
+    <section id="call-to-action" class="call-to-action section dark-background">
+        <img src="{% static 'assets/img/cta-bg.jpg' %}" alt="">
+      <div class="container mt-5">
+        <div class="form-container glass-effect">
+            <h2 class="text-center text-white">
+                <i class="bi bi-person-circle"></i>
+              </h2>    
+              
+              {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li class="{% if 'error' in message.tags %}text-danger{% elif 'success' in message.tags %}text-success{% else %}text-info{% endif %} {{ message.tags }}">
+        {{ message }}
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+
+          <h2 class="text-center mb-4 text-white">Register</h2>
+          <form method="post" action="{% url 'register' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% if message %}
+            <div class="alert alert-info">{{ message }}</div>
+            {% endif %}
+
+            <div class="form-group">
+              <label for="id_username" class="text-white">Username</label>
+              <input type="text" name="username" id="id_username" class="form-control" value="{{ form.username.value }}">
+              {% if form.username.errors %}
+                <div class="text-danger">{{ form.username.errors.0 }}</div>
+              {% endif %}
+            </div>
+            <div class="form-group">
+              <label for="id_first_name" class="text-white">First Name</label>
+              <input type="text" name="first_name" id="id_first_name" class="form-control" value="{{ form.first_name.value }}">
+            </div>
+
+            <div class="form-group">
+              <label for="id_last_name" class="text-white">Last Name</label>
+              <input type="text" name="last_name" id="id_last_name" class="form-control" value="{{ form.last_name.value }}">
+            </div>
+
+            <div class="form-group">
+              <label for="id_phone_number" class="text-white">Phone Number</label>
+              <input type="text" name="phone_number" id="id_phone_number" class="form-control" value="{{ form.phone_number.value }}">
+            </div>
+
+            <div class="form-group">
+              <label for="id_profile_image" class="text-white">Profile Image</label>
+              <input type="file" name="profile_image" id="id_profile_image" class="form-control-file">
+            </div>
+
+            <div class="form-group">
+              <label for="id_wallet_address" class="text-white">Wallet Address</label>
+              <input type="text" name="wallet_address" id="id_wallet_address" class="form-control" value="{{ form.wallet_address.value }}">
+            </div>
+
+            <div class="form-group">
+              <label for="id_email" class="text-white">Email</label>
+              <input type="email" name="email" id="id_email" class="form-control" value="{{ form.email.value }}">
+            </div>
+
+            <div class="form-group">
+              <label for="id_country" class="text-white">Country</label>
+              {{ form.country }}
+            </div>
+
+            <div class="form-group">
+              <label for="id_address" class="text-white">Address</label>
+              <textarea name="address" id="id_address" class="form-control">{{ form.address.value }}</textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="id_password1" class="text-white">Password</label>
+              <input type="password" name="password1" id="id_password1" class="form-control" value="{{ form.password1.value }}">
+            </div>
+
+            <div class="form-group">
+              <label for="id_password2" class="text-white">Confirm Password</label>
+              <input type="password" name="password2" id="id_password2" class="form-control" value="{{ form.password2.value }}">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Register</button>
+          </form>
+          
+          <!-- Link to login -->
+          <div class="mt-3 text-center">
+            <p class="text-white">Already have an account? <a href="{% url 'login' %}" class="">Login here</a></p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+    {% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer id="footer" class="footer">
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-lg-4 col-md-6 footer-about">
+          <a href="#" class="d-flex align-items-center">
+            <span class="sitename">BITRIVESCRIBE</span>
+          </a>
+          <div class="footer-contact pt-3">
+            <p>A108 Adam Street</p>
+            <p>New York, NY 535022</p>
+            <p class="mt-3"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
+            <p><strong>Email:</strong> <span>info@example.com</span></p>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Navigate</h4>
+          <ul>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Home</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">About us</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Services</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Team</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Our Services</h4>
+          <ul>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Investment Tracking</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Multi-Signature Wallet</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Hardware Wallet</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Goal-Based Planning</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-4 col-md-12">
+          <h4>Follow Us</h4>
+          <p>Stay updated with the latest from Bitrivescribe Ledger Co. Follow us for insights and news on digital assets and blockchain.</p>
+          <div class="social-links d-flex">
+            <a href=""><i class="bi bi-twitter-x"></i></a>
+            <a href=""><i class="bi bi-facebook"></i></a>
+            <a href=""><i class="bi bi-instagram"></i></a>
+            <a href=""><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container copyright text-center mt-4">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">Bitrivescribe Ledger Co</strong> <span>All Rights Reserved</span></p>
+      <div class="credits">
+        Designed by <a href="#">Bitrivescribe-Tech</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll Top Button -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+  <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+  <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/waypoints/noframework.waypoints.js' %}"></script>
+  <script src="{% static 'assets/vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+
+  <!-- Main JS File -->
+  <script src="{% static 'assets/js/main.js' %}"></script>
+
+</body>
+</html>

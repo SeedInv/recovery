@@ -1,0 +1,95 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<!-- <a href="https://t.me/bitrivescribe" target="_blank" id="telegram-btn" style="text-decoration: none;">
+    <i class="fab fa-telegram-plane"></i>
+  </a> -->
+
+  <a href="https://t.me/bitrivescribe" target="_blank" rel="noopener noreferrer" id="telegram-btn" style="text-decoration: none;">
+    <i class="fab fa-telegram-plane"></i>
+</a>
+
+
+  
+  <style>
+    /* Style for the floating Telegram button */
+    #telegram-btn {
+      position: fixed;
+      bottom: 10px;
+      left: 20px; /* Position it on the left side of the screen */
+      z-index: 9999;
+      background: linear-gradient(135deg, #0088cc, #00bcd4); /* Telegram blue gradient */
+      border: none;
+      padding: 8px;
+      border-radius: 50%;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, background 0.3s ease, filter 0.3s ease;
+      cursor: pointer;
+      opacity: 0;  /* Initially hidden */
+      pointer-events: none;  /* Prevent interaction when hidden */
+    }
+  
+    /* Styling the Font Awesome icon */
+    #telegram-btn i {
+      font-size: 27px;
+      color: white;
+      transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+    }
+  
+    /* Hover effect */
+    #telegram-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      background: linear-gradient(135deg, #00bcd4, #0088cc);
+      filter: brightness(1.1);
+    }
+  
+    #telegram-btn:hover i {
+      transform: scale(1.1);
+    }
+  
+    /* Show button when user starts scrolling */
+    #telegram-btn.show {
+      opacity: 1;  /* Show button */
+      pointer-events: auto;  /* Allow interaction when visible */
+    }
+  
+    /* Mobile optimization */
+    @media (max-width: 768px) {
+      #telegram-btn {
+        bottom: 15px;
+        left: 15px; /* Position it on the left side of the screen on mobile */
+        padding: 14px;
+      }
+  
+      #telegram-btn i {
+        font-size: 32px;
+      }
+    }
+  </style>
+  
+
+
+<script>
+  // Get the button element
+  const telegramBtn = document.getElementById('telegram-btn');
+
+  // Listen for the scroll event
+  window.addEventListener('scroll', function() {
+    // Check if the page has been scrolled down
+    if (window.scrollY > 50) {
+      // Show the button when scrolled down more than 50px
+      telegramBtn.classList.add('show');
+    } else {
+      // Hide the button when at the top of the page
+      telegramBtn.classList.remove('show');
+    }
+  });
+
+  // Initially hide the button if the page is at the top
+  if (window.scrollY <= 50) {
+    telegramBtn.classList.remove('show');
+  }
+</script>

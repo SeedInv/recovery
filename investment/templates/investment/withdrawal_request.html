@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>{% block title %}Withdrawal Request{% endblock %}</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+   {% load static %}
+  <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
+  <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="{% static 'assets/css/googlefonts.css' %}" rel="stylesheet">
+
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/css/mystyle.css' %}" rel="stylesheet">
+</head>
+
+<body class="portfolio-details-page">
+
+  <!-- Header -->
+<!-- Header -->
+<header id="header" class="header d-flex align-items-center sticky-top">
+  <div class="container-fluid container-xl position-relative d-flex align-items-center">
+    <a href="{% url 'home' %}" class="logo d-flex align-items-center me-auto">
+      <!-- Uncomment the line below if you also wish to use an image logo -->
+      <img src="{% static 'assets/img/logo.png' %}" alt="">
+      <!-- <h1 class="sitename">BITRIVESCRIBE LEDGER CO</h1> -->
+    </a>
+
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li><a href="{% url 'home' %}" class="active">HOME</a></li>
+        <li><a href="{% url 'investment' %}">INVESTMENT</a></li>
+        <li><a href="{% url 'funds_recovery' %}">FUNDS RECOVERY</a></li>
+        <li><a href="{% url 'about' %}">ABOUT</a></li>
+        <li><a href="{% url 'services' %}">SERVICES</a></li>
+        <li><a href="{% url 'team' %}">TEAM</a></li>
+        <li><a href="{% url 'contact' %}">CONTACT</a></li>
+      </ul>
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+    </nav>
+
+    {% if user.is_authenticated %}
+      <a class="btn-getstarted " href="{% url 'logout' %}" style="background-color: red;">LOGOUT</a>
+    {% else %}
+      <a class="btn-getstarted" href="{% url 'get_started' %}">GET STARTED</a>
+    {% endif %}
+  </div>
+</header>
+
+  <style>
+
+    body {
+        background-color: #f9fafc;
+        margin: 0;
+        padding: 0;
+    }
+
+    .deposit-form {
+        max-width: 500px;
+        margin: 50px auto;
+        background: #fff;
+        border-radius: 8px;
+        padding: 20px 30px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .deposit-form h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .form-control:focus {
+        box-shadow: none;
+        border-color: #6c63ff;
+    }
+
+    .btn-primary {
+        background-color: #6c63ff;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #5a54e0;
+    }
+
+    .link {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .link a {
+        color: #6c63ff;
+        text-decoration: none;
+    }
+
+    .link a:hover {
+        text-decoration: underline;
+    }
+
+    footer {
+        margin-top: 50px;
+        text-align: center;
+        padding: 10px 0;
+        background-color: #f1f1f1;
+        font-size: 14px;
+    }
+
+
+    .coin-address-list {
+display: flex;
+flex-wrap: wrap;
+gap: 20px;
+justify-content: center;
+}
+
+.coin {
+width: 250px;
+text-align: center;
+border: 1px solid #ddd;
+border-radius: 8px;
+padding: 20px;
+background-color: #f9f9f9;
+box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+cursor: pointer;
+}
+
+.coin h4 {
+font-size: 16px;
+margin: 10px 0;
+}
+
+.coin input {
+width: 100%;
+padding: 8px;
+margin-top: 10px;
+border: 1px solid #ccc;
+border-radius: 4px;
+}
+
+.coin img {
+width: 40px;
+height: 40px;
+margin-bottom: 10px;
+object-fit: contain;
+}
+
+.copy-notification {
+visibility: hidden;
+font-size: 14px;
+color: green;
+margin-top: 10px;
+font-weight: bold;
+transition: visibility 0.3s ease;
+}
+
+@media (max-width: 768px) {
+.coin {
+    width: 200px;
+}
+}
+
+@media (max-width: 480px) {
+.coin {
+    width: 100%;
+    max-width: 300px;
+}
+}
+
+
+ /* Style for the container */
+ .coin-address-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px; /* Space between coins */
+        }
+
+        /* Style for each coin card */
+        .coin {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            width: 200px; /* Set uniform width */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        /* Add hover effect */
+        .coin:hover {
+            transform: scale(1.05);
+        }
+
+        /* Style for the images */
+        .coin-image {
+            width: 100%; /* Full width of container */
+            height: 150px; /* Set fixed height */
+            object-fit: cover; /* Ensure aspect ratio and cropping */
+            border-radius: 10px; /* Add border radius */
+            margin-bottom: 10px; /* Add space below image */
+        }
+
+        /* Style for the coin title */
+        .coin h4 {
+            margin: 10px 0;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        /* Style for the input field */
+        .coin input {
+            width: 100%;
+            text-align: center;
+            border: none;
+            background-color: #f1f1f1;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        /* Style for the copy notification */
+        .copy-notification {
+            display: none;
+            font-size: 0.9rem;
+            color: #28a745;
+            margin-top: 5px;
+        }
+
+        /* Show notification on active */
+        .coin:active .copy-notification {
+            display: block;
+        }
+
+</style>
+
+
+  {%block content%}
+
+        
+<div class="tradingview-widget-container">
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+    {
+    "symbols": [
+      {
+        "proName": "FOREXCOM:SPXUSD",
+        "title": "S&P 500 Index"
+      },
+      {
+        "proName": "FOREXCOM:NSXUSD",
+        "title": "US 100 Cash CFD"
+      },
+      {
+        "proName": "FX_IDC:EURUSD",
+        "title": "EUR to USD"
+      },
+      {
+        "proName": "BITSTAMP:BTCUSD",
+        "title": "Bitcoin"
+      },
+      {
+        "proName": "BITSTAMP:ETHUSD",
+        "title": "Ethereum"
+      }
+    ],
+    "showSymbolLogo": true,
+    "isTransparent": false,
+    "displayMode": "adaptive",
+    "colorTheme": "light",
+    "locale": "en"
+  }
+    </script>
+  </div>
+    <!-- TradingView Ticker Widget -->
+<div class="tradingview-widget-container">
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js">
+    {
+      "symbols": [
+        {
+          "proName": "BITSTAMP:BTCUSD",
+          "title": "Bitcoin"
+        },
+        {
+          "proName": "BITSTAMP:ETHUSD",
+          "title": "Ethereum"
+        },
+        {
+          "proName": "BINANCE:DOGEUSD",
+          "title": "Dogecoin"
+        }
+      ],
+      "colorTheme": "dark",      <!-- Choose between "light" or "dark" themes -->
+      "isTransparent": false,   <!-- Set to true if you want a transparent background -->
+      "showSymbolLogo": true,   <!-- Show logos for each symbol -->
+      "locale": "en"            <!-- Locale for language (can be changed to other languages like "es" for Spanish) -->
+    }
+    </script>
+  </div>
+  <div class="container-fluid pt-5">
+    <!-- Card with Instructions -->
+    <h2 class="card-title text-center mb-4" style="color: #3d4d6a;">How to Request a Withdrawal</h2>
+
+    <div class="container d-flex justify-content-center align-items-center">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <p class="card-text text-center">
+            <strong style="color: #47b2e4;">To ensure your withdrawal is processed correctly, please follow the steps below carefully:</strong>
+          </p>
+          <ol>
+            <li><strong style="color: #47b2e4;">Check Your Balance:</strong> Ensure you have sufficient funds in your account for the withdrawal. You can view your balance in your account dashboard.</li>
+            <li><strong style="color: #47b2e4;">Choose Withdrawal Method:</strong> Select the cryptocurrency or fiat method you wish to use for the withdrawal. Make sure the chosen method is available on your account.</li>
+            <li><strong style="color: #47b2e4;">Enter the Withdrawal Amount:</strong> Enter the amount you'd like to withdraw. Double-check the amount to avoid any errors. Ensure the amount does not exceed your available balance.</li>
+            <li><strong style="color: #47b2e4;">Provide Wallet Address (if applicable):</strong> If you're withdrawing cryptocurrency, ensure that you provide the correct wallet address. Make sure the address is accurate, as transactions are irreversible.</li>
+            <li><strong style="color: #47b2e4;">Confirm Details:</strong> Before submitting the withdrawal request, review all the entered details (amount, wallet address, and method). This is the final step to ensure everything is correct.</li>
+            <li><strong style="color: #47b2e4;">Submit Withdrawal Request:</strong> Once you've confirmed your details, click the "Submit" or "Request Withdrawal" button. Your request will be processed, and you'll receive a confirmation message.</li>
+            <li><strong style="color: #47b2e4;">Wait for Approval:</strong> Depending on the platform's processing times and security checks, the withdrawal may take some time to complete. You'll be notified when your withdrawal is successful.</li>
+          </ol>
+          <p><strong style="color: #47b2e4;">Important Notes:</strong></p>
+          <ul>
+            <li><strong style="color: #47b2e4;">Transaction Fees:</strong> A small transaction fee may apply depending on the withdrawal method.</li>
+            <li><strong style="color: #47b2e4;">Withdrawal Limits:</strong> There may be minimum or maximum withdrawal limits. Please check your account for details.</li>
+            <li><strong style="color: #47b2e4;">Security:</strong> Ensure that your account is secure before making any withdrawal. Enable two-factor authentication (2FA) to protect your funds.</li>
+            <li><strong style="color: #47b2e4;">Mistakes:</strong> Once a withdrawal request is submitted, it cannot be canceled or modified. Double-check your details before submitting.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+ <!-- WITHDRAWAL FORM -->
+<div class="deposit-form">
+  <h2 class="text-center" style="color: #3d4d6a;">Withdraw Earnings</h2>
+  <form method="POST" action="">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="amount" class="form-label">Amount to Withdraw:</label>
+      <input type="number" name="amount" id="amount" step="0.01" class="form-control" placeholder="Enter amount" required>
+    </div>
+    
+    <div class="mb-3">
+      <label for="wallet-type" class="form-label">Select Wallet Type:</label>
+      <select name="wallet_type" id="wallet-type" class="form-control" required>
+        <option value="" disabled selected>Select Wallet Type</option>
+        <option value="crypto">Cryptocurrency</option>
+        <option value="fiat">Fiat</option>
+      </select>
+    </div>
+    
+    <div class="mb-3">
+      <label for="wallet-address" class="form-label">Wallet Address:</label>
+      <input type="text" name="wallet_address" id="wallet-address" class="form-control" placeholder="Enter wallet address" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100" style="background-color: #47b2e4;">Request Withdrawal</button>
+  </form>
+  
+  <div class="link">
+    <a href="{% url 'account_statement' %}">Go to Account Statement</a>
+  </div>
+</div>
+
+    
+    <div class="container-fluid">
+        <!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async>
+    {
+    "width": "100%",
+    "height": 550,
+    "defaultColumn": "overview",
+    "screener_type": "crypto_mkt",
+    "displayCurrency": "BTC",
+    "colorTheme": "light",
+    "locale": "en",
+    "isTransparent": false
+  }
+    </script>
+  </div>
+  <!-- TradingView Widget END -->
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2024 Bitrivescribe Ledger Co. | All Rights Reserved.
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS -->
+<script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+
+    <script>
+
+// Function to copy wallet address to clipboard
+function copyAddress(walletAddress, coinId) {
+    // Copy the wallet address to clipboard
+    navigator.clipboard.writeText(walletAddress).then(() => {
+        // Show "Copied!" message
+        const notification = document.getElementById(`${coinId}-notification`);
+        notification.style.visibility = 'visible';
+
+        // Hide "Copied!" message after 2 seconds
+        setTimeout(() => {
+            notification.style.visibility = 'hidden';
+        }, 2000);
+    }).catch(err => {
+        console.error('Error copying text: ', err);
+    });
+}
+
+
+    </script>
+
+  {%endblock%}
+
+
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+  <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+  <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/waypoints/noframework.waypoints.js' %}"></script>
+  <script src="{% static 'assets/vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+  
+  <!-- Main JS File -->
+  <script src="{% static 'assets/js/main.js' %}"></script>
+  
+</body>
+
+</html>
+

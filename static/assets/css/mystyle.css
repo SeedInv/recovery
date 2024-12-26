@@ -1,0 +1,112 @@
+.bouncing-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #47b2e4;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    animation: bounce 1s infinite;
+    transition: background-color 0.3s ease;
+    width: 100%;  /* Makes the button take the full width */
+  }
+  
+  /* Bouncing Keyframes */
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-10px);
+    }
+    60% {
+      transform: translateY(-5px);
+    }
+  }
+  
+  .bouncing-button:hover {
+    background-color: #47b2e4;
+  }
+  
+  .service-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Ensures equal space between items */
+    height: 100%; /* Ensures the service item takes full height */
+  }
+  
+  .icon {
+    font-size: 30px;
+  }
+  
+  .mt-auto {
+    margin-top: auto; /* Pushes the button to the bottom */
+  }
+  
+  .d-flex {
+    display: flex;
+  }
+  
+  .justify-content-center {
+    justify-content: center;
+  }
+  
+  .align-items-center {
+    align-items: center;
+  }
+  
+  .w-100 {
+    width: 100%;
+  }
+  
+  .section-title h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .section-title p {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+  }
+  
+
+  /* BLINKING BUTTON */
+
+  .cta-btn {
+    text-decoration: none;
+    color: #ffffff; /* Text color */
+    background-color: #007bff; /* Button background color */
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: inline-block;
+    font-weight: bold;
+    animation: blinkBackground 1s infinite; /* Blinking effect for background */
+    transition: background-color 0.3s ease;
+  }
+  
+  .cta-btn:hover {
+    background-color: #47b2e4; /* Hover color */
+    animation: none; /* Stop blinking on hover */
+  }
+  
+  @keyframes blinkBackground {
+    0% {
+      background-color: #47b2e4;; /* Original background color */
+    }
+    50% {
+      background-color: #47b2e4; /* Darker background color (blinking effect) */
+    }
+    100% {
+      background-color: #007bff; /* Original background color */
+    }
+  }
+
+
+  /* WELOCME IMG FOR EACH USER */
+
+
+
+  
+ 

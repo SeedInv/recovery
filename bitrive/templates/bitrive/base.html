@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>{% block title %}Bitrivescribe Ledger Co.{% endblock %}</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+   {% load static %}
+  <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
+  <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="{% static 'assets/css/googlefonts.css' %}" rel="stylesheet">
+
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/css/mystyle.css' %}" rel="stylesheet">
+</head>
+
+<body class="portfolio-details-page">
+
+  <!-- Header -->
+<!-- Header -->
+<header id="header" class="header d-flex align-items-center sticky-top">
+  <div class="container-fluid container-xl position-relative d-flex align-items-center">
+    <a href="{% url 'home' %}" class="logo d-flex align-items-center me-auto">
+      <!-- Uncomment the line below if you also wish to use an image logo -->
+      <img src="{% static 'assets/img/logo.png' %}" alt="">
+      <!-- <h1 class="sitename">BITRIVESCRIBE LEDGER CO</h1> -->
+    </a>
+
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li><a href="{% url 'home' %}" class="active">HOME</a></li>
+        <!-- <li><a href="{% url 'investment' %}">INVESTMENT</a></li> -->
+        <li>
+          <a href="{% if user.is_authenticated %}{% url 'select_wallet' %}{% else %}{% url 'login' %}?next={% url 'select_wallet' %}{% endif %}">
+              WALLET SETUP
+          </a>
+      </li>
+      
+        <li><a href="{% url 'funds_recovery' %}">FUNDS RECOVERY</a></li>
+        <li><a href="{% url 'about' %}">ABOUT</a></li>
+        <li><a href="{% url 'services' %}">SERVICES</a></li>
+        <li><a href="{% url 'team' %}">TEAM</a></li>
+        <li><a href="{% url 'contact' %}">CONTACT</a></li>
+      </ul>
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+    </nav>
+
+    {% if user.is_authenticated %}
+      <a class="btn-getstarted " href="{% url 'logout' %}" style="background-color: red;">LOGOUT</a>
+    {% else %}
+      <a class="btn-getstarted" href="{% url 'get_started' %}">GET STARTED</a>
+    {% endif %}
+  </div>
+</header>
+
+
+  
+
+
+  <main class="main">
+
+<!-- Hero Section -->
+<section id="hero" class="hero section dark-background">
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center" data-aos="zoom-out">
+        <h1>Secure Your Digital Future with Cutting-Edge Technology</h1>
+        <p>Secure-your-digital-future</p>
+        <div class="d-flex">
+          {% if user.is_authenticated %}
+            <a href="{% url 'profile' %}" class="user-info-wrapper d-flex align-items-center">
+              <div class="user-info d-flex align-items-center">
+                {% if user.userprofile.profile_image %}
+                  <img src="{{ user.userprofile.profile_image.url }}" alt="Profile Image" class="profile-img rounded-circle" style="width: 40px; height: 40px;">
+                {% else %}
+                  <img src="{% static 'assets/img/default-profile.png' %}" alt="Default Profile" class="profile-img rounded-circle" style="width: 40px; height: 40px;">
+                {% endif %}
+                <span class="welcome-message ms-2">Welcome, {{ user.username }}!</span>
+              </div>
+            </a>
+          {% else %}
+            <a href="{% url 'get_started' %}" class="btn-get-started">Get Started</a>
+          {% endif %}
+          <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>
+        </div>
+      </div>
+      <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="200">
+        <img src="{% static 'assets/img/hero-img.png' %}" class="img-fluid animated" alt="Hero Image">
+      </div>
+    </div>
+  </div>
+</section><!-- /Hero Section -->
+
+
+<style>
+  /* Wrapper for user info with border and rounded corners */
+.user-info-wrapper {
+  border: 2px solid #007bff; /* Blue border, change as per your design */
+  border-radius: 25px; /* Rounded corners */
+  padding: 10px 15px; /* Space around content */
+  background-color: rgba(0, 123, 255, 0.1); /* Light blue background */
+  display: flex;
+  align-items: center;
+}
+
+/* Profile image styles */
+.profile-img {
+  border-radius: 50%; /* Ensures the image stays circular */
+  margin-right: 10px; /* Spacing between image and text */
+}
+
+/* Welcome message styling */
+.welcome-message {
+  font-size: 16px; /* Adjust size */
+  font-weight: 500; /* Make the text slightly bold */
+  color:white; /* Blue color for the text, change as needed */
+}
+
+/* For adding some hover effect to the border */
+.user-info-wrapper:hover {
+  border-color: #0056b3; /* Darker blue on hover */
+  background-color: rgba(0, 123, 255, 0.2); /* Slightly darker background on hover */
+  cursor: pointer; /* Show pointer cursor when hovering */
+}
+
+
+</style>
+
+    <!-- Clients Section -->
+    <section id="clients" class="clients section light-background">
+
+      <div class="container" data-aos="zoom-in">
+
+        <div class="swiper init-swiper">
+          <script type="application/json" class="swiper-config">
+            {
+              "loop": true,
+              "speed": 600,
+              "autoplay": {
+                "delay": 5000
+              },
+              "slidesPerView": "auto",
+              "pagination": {
+                "el": ".swiper-pagination",
+                "type": "bullets",
+                "clickable": true
+              },
+              "breakpoints": {
+                "320": {
+                  "slidesPerView": 2,
+                  "spaceBetween": 40
+                },
+                "480": {
+                  "slidesPerView": 3,
+                  "spaceBetween": 60
+                },
+                "640": {
+                  "slidesPerView": 4,
+                  "spaceBetween": 80
+                },
+                "992": {
+                  "slidesPerView": 5,
+                  "spaceBetween": 120
+                },
+                "1200": {
+                  "slidesPerView": 6,
+                  "spaceBetween": 120
+                }
+              }
+            }
+          </script>
+          <div class="swiper-wrapper align-items-center">
+            <div class="swiper-slide"><img src="{% static 'assets/img/clients/binance-logo1.png' %}" class="img-fluid" alt="Client 1"></div>
+            <div class="swiper-slide"><img src="{% static 'assets/img/clients/bybit.png' %}" class="img-fluid" alt="Client 2"></div>
+            <div class="swiper-slide"><img src="{% static 'assets/img/clients/coinbase1.png' %}" class="img-fluid" alt="Client 3"></div>
+            <div class="swiper-slide"><img src="{% static 'assets/img/clients/blockFi-Logo.png' %}" class="img-fluid" alt="Client 4"></div>
+            <div class="swiper-slide"><img src="{% static 'assets/img/clients/maker.png' %}" class="img-fluid" alt="Client 5"></div>
+            <div class="swiper-slide"><img src="{% static 'assets/img/clients/chain11.png' %}" class="img-fluid" alt="Client 6"></div>
+            <div class="swiper-slide"><img src="{% static 'assets/img/clients/kucoin.png' %}" class="img-fluid" alt="Client 7"></div>
+            <div class="swiper-slide"><img src="{% static 'assets/img/clients/ledger.png' %}" class="img-fluid" alt="Client 8"></div>
+        </div>
+        
+      </div>
+
+    </section><!-- /Clients Section -->
+
+    <!-- About Section -->
+    <section id="about" class="about section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>About Us</h2>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
+            <p>
+              At <b>Bitrivescribe Ledger Co.</b>, we are committed to revolutionizing 
+              how you safeguard your cryptocurrency.
+              In an ever-evolving digital world, securing your digital
+              assets is more critical than ever. That’s why we’ve 
+              developed a cutting-edge, user-friendly hardware wallet
+              designed to provide maximum protection and ease of use
+              for both beginners and advanced users.
+            </p>
+            <ul>
+              <li><i class="bi bi-check2-circle"></i> <span>Advanced Security Measures</span></li>
+              <li><i class="bi bi-check2-circle"></i> <span>Streamlined User Experience</span></li>
+              <li><i class="bi bi-check2-circle"></i> <span>Professional Support Services</span></li>
+              <li><i class="bi bi-check2-circle"></i> <span>Comprehensive Asset Management</span></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+            <p>Our mission is to provide you with the tools, resources, and expert guidance you need to manage, protect, and grow your digital assets with confidence. Whether you're just starting your crypto journey or looking to expand your portfolio, Bitrivescribe Ledger Co. offers a robust and transparent solution to help you navigate the complexities of cryptocurrency investing. </p>
+            <a href="#" class="read-more"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section><!-- /About Section -->
+
+    <!-- Why Us Section -->
+    <section id="why-us" class="section why-us light-background" data-builder="section">
+
+      <div class="container-fluid">
+
+        
+  <style>
+    /* Add background image to the main container */
+    .counter-container {
+  position: relative; /* Set position relative to allow for positioning the overlay */
+  text-align: center;
+  padding: 50px 0;
+  background-image: url("{% static 'assets/img/cta-bg.jpg' %}"); /* Your image URL */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: white; /* Ensure text is visible over the image */
+}
+
+/* Create the glass blur overlay using ::before pseudo-element */
+.counter-container::before {
+  content: ''; /* Create empty content */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(77, 85, 155, 0.568); /* Light white overlay with some transparency */
+  backdrop-filter: blur(0px); /* Apply the blur effect */
+  -webkit-backdrop-filter: blur(1px); /* For Safari compatibility */
+  z-index: 1; /* Ensure the overlay is above the image but below the text */
+  border-radius: 10px; /* Optional: Add rounded corners for a softer look */
+}
+
+/* Ensure the text content is above the overlay */
+.counter-container .counter, .counter-container .label {
+  position: relative;
+  z-index: 2; /* Text is above the overlay */
+  font-weight: bold; /* Optional: Make text bold for better readability */
+}
+
+/* Optionally, add a subtle shadow to the text for better visibility on the background */
+.counter-container .counter {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Subtle shadow to make the text stand out */
+}
+
+
+    .counter {
+      font-size: 2rem;
+      font-weight: bold;
+      color: rgb(255, 255, 255); /* You can change this to adjust the text color */
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Add shadow to text for better visibility */
+    }
+
+    .label {
+      font-size: 1rem;
+      color: #f8f9fa; /* Lighter color for the labels */
+    }
+
+    /* Ensure counters are responsive */
+    @media (max-width: 768px) {
+      .counter {
+        font-size: 1.5rem;
+      }
+      .label {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container counter-container">
+  <div class="row">
+    <div class="col">
+      <div class="counter" id="totalAssets">0</div>
+      <div class="label">TOTAL ASSETS TRACKED</div>
+    </div>
+    <div class="col">
+      <div class="counter" id="totalPayouts">0</div>
+      <div class="label">ASSETS ENCRYPTED</div>
+    </div>
+    <div class="col">
+      <div class="counter" id="activeInvestors">0</div>
+      <div class="label">SUCCESSFUL RECOVERIES</div>
+    </div>
+    <div class="col">
+      <div class="counter" id="runningDays">0</div>
+      <div class="label">RUNNING DAYS</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const counters = [
+    { id: "totalAssets", start: 0, end: 1206682180, duration: 3000 },
+    { id: "totalPayouts", start: 0, end: 216989569, duration: 3000 },
+    { id: "activeInvestors", start: 0, end: 205, duration: 2000 },
+    { id: "runningDays", start: 0, end: 2504, duration: 2000 }
+  ];
+
+  function animateCounter(id, start, end, duration) {
+    const element = document.getElementById(id);
+    let current = start;
+    const increment = (end - start) / (duration / 10);
+
+    const timer = setInterval(() => {
+      current += increment;
+      if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+        current = end;
+        clearInterval(timer);
+      }
+      element.textContent = Math.floor(current).toLocaleString();
+    }, 10);
+  }
+
+  window.onload = () => {
+    counters.forEach(counter => {
+      animateCounter(counter.id, counter.start, counter.end, counter.duration);
+    });
+  };
+
+
+  
+</script>
+
+
+
+      </div>
+
+    </section><!-- /Why Us Section -->
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills section">
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row">
+          <div class="col-lg-6 d-flex align-items-center">
+            <img src="{% static 'assets/img/services.jpg' %}" class="img-fluid rounded" alt="Skills Image">
+
+        </div>
+        
+          <div class="col-lg-6 pt-4 pt-lg-0 content">
+
+            <h3>Why Choose Us</h3>
+            <h5 class="fst-italic">
+              Choose Bitrivescribe Ledger Co. for Unmatched Reliability and Security
+              At Bitrivescribe Ledger Co., we deliver premium hardware wallets 
+              that ensure unparalleled security and user satisfaction. 
+              Our products use cutting-edge technology to protect your 
+              digital assets. Whether you're a seasoned crypto investor or new
+              to digital currencies, our hardware wallets provide a seamless
+              experience for managing your investments.
+            </h5>
+
+            <div class="skills-content skills-animation">
+
+              <div class="progress">
+                <span class="skill"><span>ADVANCED SECURITY FEATURES</span> <i class="val">100%</i></span>
+                <div class="progress-bar-wrap">
+                  <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div><!-- End Skills Item -->
+
+              <div class="progress">
+                <span class="skill"><span>USER-CENTRIC DESIGN</span> <i class="val">95%</i></span>
+                <div class="progress-bar-wrap">
+                  <div class="progress-bar" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div><!-- End Skills Item -->
+
+              <div class="progress">
+                <span class="skill"><span>MULTI-CURRENCY SUPPORT</span> <i class="val">98%</i></span>
+                <div class="progress-bar-wrap">
+                  <div class="progress-bar" role="progressbar" aria-valuenow="98" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div><!-- End Skills Item -->
+
+              <div class="progress">
+                <span class="skill"><span>PORTABILITY AND CONVENIENCE</span> <i class="val">100%</i></span>
+                <div class="progress-bar-wrap">
+                  <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div><!-- End Skills Item -->
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </section><!-- /Skills Section -->
+
+   <!-- Services Section -->
+<section id="services" class="services section light-background">
+
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Our Services</h2>
+    <p><b>Bitrivescribe Nano Ledger Co. provides cutting-edge solutions for securing your digital assets and ensuring hassle-free wallet management.</b></p>
+  </div><!-- End Section Title -->
+  
+  <div class="container">
+    <div class="row gy-4">
+      <!-- Service Item 1 -->
+      <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
+        <div class="service-item position-relative d-flex flex-column shadow">
+          <div class="icon text-center"><i class="bi bi-shield-lock icon"></i></div>
+          <h4 class="text-center"><a href="" class="stretched-link">Hardware Wallet Security</a></h4>
+          <p>Protect your digital assets with Bitrivescribe’s state-of-the-art hardware wallets. Designed for maximum security, these wallets offer offline storage and encryption to safeguard your crypto investments against hacking and online threats.</p>
+          <!-- Button aligned at the bottom -->
+          <div class="d-flex justify-content-center align-items-center mt-4 mt-sm-5 mt-md-4">
+            <button class="bouncing-button btn shadow">Get Started</button>
+          </div>        
+        </div>
+      </div><!-- End Service Item -->
+  
+      <!-- Service Item 2 -->
+      <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
+        <div class="service-item position-relative d-flex flex-column shadow">
+          <div class="icon text-center"><i class="bi bi-people icon"></i></div>
+          <h4 class="text-center"><a href="" class="stretched-link">Multi-Signature Wallets</a></h4>
+          <p>Enhance your wallet’s security with Bitrivescribe’s multi-signature wallets. Requiring multiple authorizations to approve transactions, our multi-signature solutions are ideal for businesses and individuals looking for an added layer of protection for their assets.</p>
+          <!-- Button aligned at the bottom -->
+          <div class="d-flex justify-content-center align-items-center mt-4 mt-sm-5 mt-md-4">
+            <button class="bouncing-button btn shadow">Get Started</button>
+          </div>        
+        </div>
+      </div><!-- End Service Item -->
+  
+      <!-- Service Item 3 -->
+      <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
+        <div class="service-item position-relative d-flex flex-column shadow">
+          <div class="icon text-center"><i class="bi bi-arrow-repeat icon"></i></div>
+          <h4 class="text-center"><a href="" class="stretched-link">Wallet Recovery Services</a></h4>
+          <p>Recover your lost or inaccessible wallets with Bitrivescribe’s secure and efficient recovery services. We provide specialized support to help restore your wallet access and ensure your digital assets are protected.</p>
+          <!-- Button aligned at the bottom -->
+          <div class="d-flex justify-content-center align-items-center mt-4 mt-sm-5 mt-md-4">
+            <button class="bouncing-button btn shadow">Get Started</button>
+          </div>        
+        </div>
+      </div><!-- End Service Item -->
+  
+      <!-- Service Item 4 -->
+      <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="400">
+        <div class="service-item position-relative d-flex flex-column shadow">
+          <div class="icon text-center"><i class="bi bi-key icon"></i></div>
+          <h4 class="text-center"><a href="" class="stretched-link">Wallet Management & Security</a></h4>
+          <p>Effortlessly manage and secure your crypto assets with Bitrivescribe’s wallet management tools. Our user-friendly platform ensures safe storage, easy access, and protection against unauthorized access or hacking attempts.</p>
+          <!-- Button aligned at the bottom -->
+          <div class="d-flex justify-content-center align-items-center mt-4 mt-sm-5 mt-md-4">
+            <button class="bouncing-button btn shadow">Get Started</button>
+          </div>        
+        </div>
+      </div><!-- End Service Item -->
+    </div><!-- End Row -->
+  </div><!-- End Container -->
+  
+  </section><!-- /Services Section -->
+  
+    <!-- Call To Action Section -->
+    <section id="call-to-action" class="call-to-action section dark-background">
+
+      <img src="{% static 'assets/img/cta-bg.jpg' %}" alt="">
+
+      <div class="container">
+
+        <div class="row" data-aos="zoom-in" data-aos-delay="100">
+          <div class="col-xl-9 text-center text-xl-start">
+            <h1 class="text-center">Lost Fund Recovery</h1>
+            <p><b>
+              Bitrivescribe Ledger Co offers a trusted and secure path 
+              to recover your crypto assets swiftly. With cutting-edge 
+              blockchain technology and expert assistance, we guarantee 
+              a seamless and safe restoration process. From lost keys to 
+              transaction issues, rely on us to recover your funds with 
+              unmatched precision and security.</b></p>
+          </div>
+          <div class="col-xl-3 cta-btn-container text-center mt-4">
+            {% if user.is_authenticated %}
+                <a class="cta-btn align-middle shadow-lg" href="{% url 'recovery:form' %}"><b>Start Claim</b></a>
+            {% else %}
+                <a class="cta-btn align-middle shadow-lg" href="{% url 'get_started' %}"><b>Start Claim</b></a>
+            {% endif %}
+        </div>
+        
+          
+          
+          
+        </div>
+
+      </div>
+
+    </section><!-- /Call To Action Section -->
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="portfolio section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Market Insights & Charts</h2>
+        <p>Stay updated with real-time crypto data. Track prices, trends, and explore interactive charts for Bitcoin, Ethereum, and more.</p>
+      </div><!-- End Section Title -->
+          
+      
+<div class="tradingview-widget-container">
+  <div class="tradingview-widget-container__widget"></div>
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+  {
+  "symbols": [
+    {
+      "proName": "FOREXCOM:SPXUSD",
+      "title": "S&P 500 Index"
+    },
+    {
+      "proName": "FOREXCOM:NSXUSD",
+      "title": "US 100 Cash CFD"
+    },
+    {
+      "proName": "FX_IDC:EURUSD",
+      "title": "EUR to USD"
+    },
+    {
+      "proName": "BITSTAMP:BTCUSD",
+      "title": "Bitcoin"
+    },
+    {
+      "proName": "BITSTAMP:ETHUSD",
+      "title": "Ethereum"
+    }
+  ],
+  "showSymbolLogo": true,
+  "isTransparent": false,
+  "displayMode": "adaptive",
+  "colorTheme": "light",
+  "locale": "en"
+}
+  </script>
+</div>
+<!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container">
+  <div class="tradingview-widget-container__widget"></div>
+  <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async>
+  {
+  "width": "100%",
+  "height": 550,
+  "defaultColumn": "overview",
+  "screener_type": "crypto_mkt",
+  "displayCurrency": "USD",
+  "colorTheme": "light",
+  "locale": "en"
+}
+  </script>
+</div>
+<!-- TradingView Widget END -->
+
+
+
+    </section>
+    
+    
+    <!-- Team Section -->
+<section id="team" class="team section">
+
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>The Experts Behind Our Security Solutions</h2>
+    <p>Meet the innovators and specialists dedicated to providing the highest level of security and technology for your digital assets.</p>
+  </div><!-- End Section Title -->
+
+  <div class="container">
+    <div class="row gy-4">
+
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="team-member d-flex align-items-start">
+          <div class="pic"><img src="{% static 'assets/img/team/team-1.jpg'%}" class="img-fluid" alt=""></div>
+          <div class="member-info">
+            <h4>Walter White</h4>
+            <span>Chief Security Officer (CSO)</span>
+            <p>Leading the way in securing digital assets with cutting-edge hardware wallet technology and multi-signature solutions.</p>
+            <div class="social">
+              <a href=""><i class="bi bi-twitter-x"></i></a>
+              <a href=""><i class="bi bi-facebook"></i></a>
+              <a href=""><i class="bi bi-instagram"></i></a>
+              <a href=""><i class="bi bi-linkedin"></i></a>
+            </div>
+          </div>
+        </div>
+      </div><!-- End Team Member -->
+
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="team-member d-flex align-items-start">
+          <div class="pic"><img src="{% static 'assets/img/team/team-2.jpg' %}" class="img-fluid" alt=""></div>
+          <div class="member-info">
+            <h4>Sarah Jhonson</h4>
+            <span>Chief Technology Officer (CTO)</span>
+            <p>Expert in blockchain technology and hardware wallet encryption, leading efforts to develop robust security protocols.</p>
+            <div class="social">
+              <a href=""><i class="bi bi-twitter-x"></i></a>
+              <a href=""><i class="bi bi-facebook"></i></a>
+              <a href=""><i class="bi bi-instagram"></i></a>
+              <a href=""><i class="bi bi-linkedin"></i></a>
+            </div>
+          </div>
+        </div>
+      </div><!-- End Team Member -->
+
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
+        <div class="team-member d-flex align-items-start">
+          <div class="pic"><img src="{% static 'assets/img/team/team-3.jpg'%}" class="img-fluid" alt=""></div>
+          <div class="member-info">
+            <h4>William Anderson</h4>
+            <span>Blockchain and Security Expert</span>
+            <p>Specializing in decentralized systems and cryptographic protocols to ensure the highest level of security for digital wallets.</p>
+            <div class="social">
+              <a href=""><i class="bi bi-twitter-x"></i></a>
+              <a href=""><i class="bi bi-facebook"></i></a>
+              <a href=""><i class="bi bi-instagram"></i></a>
+              <a href=""><i class="bi bi-linkedin"></i></a>
+            </div>
+          </div>
+        </div>
+      </div><!-- End Team Member -->
+
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="400">
+        <div class="team-member d-flex align-items-start">
+          <div class="pic"><img src="{% static 'assets/img/team/team-4.jpg'%}" class="img-fluid" alt=""></div>
+          <div class="member-info">
+            <h4>Amanda Jepson</h4>
+            <span>Legal Advisor</span>
+            <p>Specializing in digital asset regulations, security laws, and compliance to ensure Bitrivescribe Ledger Co.'s services are fully legally protected.</p>
+            <div class="social">
+              <a href=""><i class="bi bi-twitter-x"></i></a>
+              <a href=""><i class="bi bi-facebook"></i></a>
+              <a href=""><i class="bi bi-instagram"></i></a>
+              <a href=""><i class="bi bi-linkedin"></i></a>
+            </div>
+          </div>
+        </div>
+      </div><!-- End Team Member -->
+
+    </div>
+
+  </div>
+
+</section><!-- /Team Section -->
+
+<!-- Pricing Section -->
+<!-- <section id="pricing" class="pricing section light-background"> -->
+
+  <!-- Section Title -->
+  <!-- <div class="container section-title" data-aos="fade-up">
+    <h2>INVEST NOW</h2>
+    <p>Earn Consistent, Passive Income with Our Expertly Managed Investment Plans</p> -->
+  <!-- </div>End Section Title -->
+<!-- 
+  <div class="container">
+    <div class="row gy-4"> -->
+
+      <!-- Basic Plan -->
+      <!-- <div class="col-lg-4" data-aos="zoom-in" data-aos-delay="100">
+        <div class="pricing-item">
+          <h3>BASIC PLAN</h3>
+          <h4><sup></sup>25.2%<span> / monthly return</span></h4>
+          <ul>
+            <li><i class="bi bi-check"></i> <span>Daily Profit: <b>0.84%</b></span></li>
+            <li><i class="bi bi-check"></i><span>Minimum: <b>$200.00</b></span></li>
+            <li><i class="bi bi-check"></i> <span>Maximum: <b>$4,999.00</b></span></li>
+            <li class="bi"><i class="bi bi-check"></i> <span>Contract Duration: <b>7 days</b></span></li>
+            <li class="bi"><i class="bi bi-check"></i> <span>Total Return on Investment: <b>48%</b></span></li>
+          </ul>
+          <a href="{% if user.is_authenticated %}{% url 'create_investment' %}{% else %}{% url 'get_started' %}{% endif %}" class="buy-btn">
+            Invest Now
+          </a>
+        </div>
+      </div>End Pricing Item -->
+
+      <!-- Silver Plan -->
+      <!-- <div class="col-lg-4" data-aos="zoom-in" data-aos-delay="200">
+        <div class="pricing-item featured">
+          <h3>SILVER PLAN</h3>
+          <h4><sup></sup>39%<span> / monthly return</span></h4>
+          <ul>
+            <li><i class="bi bi-check"></i> <span>Daily Profit: <b>1.3%</b></span></li>
+            <li><i class="bi bi-check"></i><span>Minimum: <b>$500.00</b></span></li>
+            <li><i class="bi bi-check"></i> <span>Maximum: <b>$4,000.00</b></span></li>
+            <li class="bi"><i class="bi bi-check"></i> <span>Contract Duration: <b>14 days</b></span></li>
+            <li class="bi"><i class="bi bi-check"></i> <span>Total Return on Investment: <b>48%</b></span></li>
+          </ul>
+          <a href="{% if user.is_authenticated %}{% url 'create_investment' %}{% else %}{% url 'get_started' %}{% endif %}" class="buy-btn">
+            Invest Now
+          </a>
+        </div>
+      </div>End Pricing Item -->
+
+      <!-- Gold Plan -->
+      <!-- <div class="col-lg-4" data-aos="zoom-in" data-aos-delay="300">
+        <div class="pricing-item">
+          <h3>GOLD PLAN</h3>
+          <h4><sup></sup>40.2%<span> / monthly return</span></h4>
+          <ul>
+            <li><i class="bi bi-check"></i> <span>Daily Profit: <b>1.3%</b></span></li>
+            <li><i class="bi bi-check"></i><span>Minimum: <b>$25,000.00</b></span></li>
+            <li><i class="bi bi-check"></i> <span>Maximum: <b>$49,999.00</b></span></li>
+            <li class="bi"><i class="bi bi-check"></i> <span>Contract Duration: <b>21 days</b></span></li>
+            <li class="bi"><i class="bi bi-check"></i> <span>Total Return on Investment: <b>48%</b></span></li>
+          </ul>
+          <a href="{% if user.is_authenticated %}{% url 'create_investment' %}{% else %}{% url 'get_started' %}{% endif %}" class="buy-btn">
+            Invest Now
+          </a>
+        </div>
+      </div>End Pricing Item -->
+
+    <!-- </div>/row -->
+  <!-- </div>/container -->
+<!-- 
+  <div class="container pt-4">
+    <div class="row gy-4"> -->
+
+      <!-- Platinum Plan -->
+      <!-- <div class="col-lg-4" data-aos="zoom-in" data-aos-delay="100">
+        <div class="pricing-item">
+          <h3>PLATINUM PLAN</h3>
+          <h4><sup></sup>56.1%<span> / monthly return</span></h4>
+          <ul>
+            <li><i class="bi bi-check"></i> <span>Daily Profit: <b>1.87%</b></span></li>
+            <li><i class="bi bi-check"></i><span>Minimum: <b>$50,000.00</b></span></li>
+            <li><i class="bi bi-check"></i> <span>Maximum: <b>$99,999.00</b></span></li>
+            <li class="bi"><i class="bi bi-check"></i> <span>Contract Duration: <b>28 days</b></span></li>
+            <li class="bi"><i class="bi bi-check"></i> <span>Total Return on Investment: <b>48%</b></span></li>
+          </ul>
+          <a href="{% if user.is_authenticated %}{% url 'create_investment' %}{% else %}{% url 'get_started' %}{% endif %}" class="buy-btn">
+            Invest Now
+          </a>
+        </div>
+      </div>End Pricing Item -->
+
+      <!-- Diamond Plan -->
+      <!-- <div class="col-lg-4" data-aos="zoom-in" data-aos-delay="200">
+        <div class="pricing-item featured">
+          <h3>DIAMOND PLAN</h3>
+          <h4><sup></sup>60%<span> / monthly return</span></h4>
+          <ul>
+            <li><i class="bi bi-check"></i> <span>Daily Profit: <b>2.0%</b></span></li>
+            <li><i class="bi bi-check"></i><span>Minimum: <b>$100,000.00</b></span></li>
+            <li><i class="bi bi-check"></i> <span>Maximum: <b>$499,999.00</b></span></li>
+            <li class="bi"><i class="bi bi-check"></i> <span>Contract Duration: <b>35 days</b></span></li>
+            <li class="bi"><i class="bi bi-check"></i> <span>Total Return on Investment: <b>48%</b></span></li>
+          </ul>
+          <a href="{% if user.is_authenticated %}{% url 'create_investment' %}{% else %}{% url 'get_started' %}{% endif %}" class="buy-btn">
+            Invest Now
+          </a>
+        </div>
+      </div>End Pricing Item -->
+
+      <!-- Ultimate Plan -->
+      <!-- <div class="col-lg-4" data-aos="zoom-in" data-aos-delay="300">
+        <div class="pricing-item">
+          <h3>ULTIMATE PLAN</h3>
+          <h4><sup>$</sup>75%<span> / monthly return</span></h4>
+          <ul>
+            <li><i class="bi bi-check"></i> <span>Daily Profit: <b>2.5%</b></span></li>
+            <li><i class="bi bi-check"></i><span>Minimum: <b>$500,000.00</b></span></li>
+            <li><i class="bi bi-check"></i> <span>Maximum: <b>$1,000,000.00</b></span></li>
+            <li class="bi"><i class="bi bi-check"></i> <span>Contract Duration: <b>42 days</b></span></li>
+            <li class="bi"><i class="bi bi-check"></i> <span>Total Return on Investment: <b>48%</b></span></li>
+          </ul>
+          <a href="{% if user.is_authenticated %}{% url 'create_investment' %}{% else %}{% url 'get_started' %}{% endif %}" class="buy-btn">
+            Invest Now
+          </a>
+        </div>
+      </div>End Pricing Item -->
+
+    <!-- </div>/row -->
+  <!-- </div>/container -->
+
+<!-- </section>/Pricing Section -->
+
+<!-- Portfolio Section -->
+<section id="portfolio" class="portfolio section">
+
+ <!-- Section Title -->
+<div class="container section-title" data-aos="fade-up">
+  <h2>Leading ISO 20022 Compliant Crypto Assets</h2>
+  <p>Discover top ISO 20022 compliant cryptocurrencies for secure, scalable, and efficient digital asset management.</p>
+</div><!-- End Section Title -->
+
+<div class="container">
+
+  <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+
+    <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
+      <li data-filter="*" class="filter-active">All</li>
+      <li data-filter=".filter-app">Cross-Border</li>
+      <li data-filter=".filter-product">Smart Contracts</li>
+      <li data-filter=".filter-branding">IoT & Trade</li>
+    </ul><!-- End Portfolio Filters -->
+
+    <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
+
+      <!-- Portfolio Item 1 -->
+      <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+        <img src="{% static 'assets/img/masonry-portfolio/iso1.jpg' %}" class="img-fluid" alt="">
+        <div class="portfolio-info">
+          <h4>ALGORAND</h4>
+          <p>Scalability</p>
+          <a href="{% static 'assets/img/masonry-portfolio/iso1.jpg' %}" title="App 1" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+          <a href="#" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+        </div>
+      </div><!-- End Portfolio Item -->
+
+      <!-- Portfolio Item 2 -->
+      <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
+        <img src="{% static 'assets/img/masonry-portfolio/iso2.jpg' %}" class="img-fluid" alt="">
+        <div class="portfolio-info">
+          <h4>STELLAR</h4>
+          <p>Efficiency</p>
+          <a href="{% static 'assets/img/masonry-portfolio/iso2.jpg' %}" title="Product 1" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+          <a  href="#" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+        </div>
+      </div><!-- End Portfolio Item -->
+
+      <!-- Portfolio Item 3 -->
+      <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
+        <img src="{% static 'assets/img/masonry-portfolio/iso3.webp' %}" class="img-fluid" alt="">
+        <div class="portfolio-info">
+          <h4>Ripple (XRP)</h4>
+          <p>Cross-Bordert</p>
+          <a href="{% static 'assets/img/masonry-portfolio/iso3.webp' %}" title="Branding 1" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+          <a  href="#" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+        </div>
+      </div><!-- End Portfolio Item -->
+
+      <!-- Portfolio Item 4 -->
+      <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+        <img src="{% static 'assets/img/masonry-portfolio/iso4.png' %}" class="img-fluid" alt="">
+        <div class="portfolio-info">
+          <h4>Quant (QNT)</h4>
+          <p>Interoperability</p>
+          <a href="{% static 'assets/img/masonry-portfolio/iso4.png' %}" title="App 2" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+          <a  href="#" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+        </div>
+      </div><!-- End Portfolio Item -->
+
+      <!-- Portfolio Item 5 -->
+      <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
+        <img src="{% static 'assets/img/masonry-portfolio/iso5.webp' %}" class="img-fluid" alt="">
+        <div class="portfolio-info">
+          <h4>IOTA (MIOTA)</h4>
+          <p>IoT</p>
+          <a href="{% static 'assets/img/masonry-portfolio/iso5.webp' %}" title="Product 2" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+          <a  href="#" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+        </div>
+      </div><!-- End Portfolio Item -->
+
+      <!-- Portfolio Item 6 -->
+      <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
+        <img src="{% static 'assets/img/masonry-portfolio/iso6.jpg' %}" class="img-fluid" alt="">
+        <div class="portfolio-info">
+          <h4>Hedera (HBAR)</h4>
+          <p>Consensus</p>
+          <a href="{% static 'assets/img/masonry-portfolio/iso6.jpg' %}" title="Branding 2" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+          <a  href="#" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+        </div>
+      </div><!-- End Portfolio Item -->
+
+      <!-- Portfolio Item 7 -->
+      <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+        <img src="{% static 'assets/img/masonry-portfolio/iso7.jpg' %}" class="img-fluid" alt="">
+        <div class="portfolio-info">
+          <h4>XDC Network (XDC)</h4>
+          <p>Trade Finance</p>
+          <a href="{% static 'assets/img/masonry-portfolio/iso7.jpg' %}" title="App 3" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+          <a  href="#" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+        </div>
+      </div><!-- End Portfolio Item -->
+
+      <!-- Portfolio Item 8 -->
+      <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
+        <img src="{% static 'assets/img/masonry-portfolio/iso8.webp' %}" class="img-fluid" alt="">
+        <div class="portfolio-info">
+          <h4>Cardano (ADA)</h4>
+          <p>Security</p>
+          <a href="{% static 'assets/img/masonry-portfolio/iso8.webp' %}" title="Product 3" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+          <a href="#" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+        </div>
+      </div><!-- End Portfolio Item -->
+
+      <!-- Portfolio Item 9 -->
+      <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
+        <img src="{% static 'assets/img/masonry-portfolio/iso9.webp' %}" class="img-fluid" alt="">
+        <div class="portfolio-info">
+          <h4>Ripple (XRP)</h4>
+          <p>Cross-Bordert</p>
+          <a href="{% static 'assets/img/masonry-portfolio/iso9.webp' %}" title="Branding 3" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+          <a href="#" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+        </div>
+      </div><!-- End Portfolio Item -->
+
+    </div><!-- End Portfolio Container -->
+
+  </div>
+
+</div>
+
+</section><!-- /Portfolio Section -->
+
+
+
+
+
+
+<!-- Testimonials Section -->
+<section id="testimonials" class="testimonials section">
+
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Testimonials</h2>
+    <p><b>See how Bitrivescribe Ledger Co has helped users securely store their crypto and recover lost funds.</b></p>
+  </div><!-- End Section Title -->
+
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+    <div class="swiper init-swiper">
+      <script type="application/json" class="swiper-config">
+        {
+          "loop": true,
+          "speed": 600,
+          "autoplay": {
+            "delay": 5000
+          },
+          "slidesPerView": "auto",
+          "pagination": {
+            "el": ".swiper-pagination",
+            "type": "bullets",
+            "clickable": true
+          }
+        }
+      </script>
+      <div class="swiper-wrapper">
+
+        <!-- Testimonial Item 1 -->
+        <div class="swiper-slide">
+          <div class="testimonial-item">
+            <img src="{% static 'assets/img/testimonials/testimonials-1.jpg'%}" class="testimonial-img" alt="">
+            <h3>John M.</h3>
+            <h4>Crypto Investor</h4>
+            <div class="stars">
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+            </div>
+            <p>
+              <i class="bi bi-quote quote-icon-left"></i>
+              <span>After using Bitrivescribe Ledger Co for storing my crypto assets, I finally feel at ease knowing that my investments are secure. The hardware wallet is incredibly easy to use and provides the best security for my assets.</span>
+              <i class="bi bi-quote quote-icon-right"></i>
+            </p>
+          </div>
+        </div><!-- End Testimonial Item -->
+
+        <!-- Testimonial Item 2 -->
+        <div class="swiper-slide">
+          <div class="testimonial-item">
+            <img src="{% static 'assets/img/testimonials/testimonials-2.jpg'%}" class="testimonial-img" alt="">
+            <h3>Sarah L.</h3>
+            <h4>Crypto Enthusiast</h4>
+            <div class="stars">
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+            </div>
+            <p>
+              <i class="bi bi-quote quote-icon-left"></i>
+              <span>I had lost access to my funds after a mishap with my online wallet. Thankfully, Bitrivescribe Ledger Co’s recovery process helped me retrieve my crypto assets securely. I’ll never use anything else for storing my coins!</span>
+              <i class="bi bi-quote quote-icon-right"></i>
+            </p>
+          </div>
+        </div><!-- End Testimonial Item -->
+
+        <!-- Testimonial Item 3 -->
+        <div class="swiper-slide">
+          <div class="testimonial-item">
+            <img src="{% static 'assets/img/testimonials/testimonials-3.jpg'%}" class="testimonial-img" alt="">
+            <h3>Karen W.</h3>
+            <h4>Blockchain Developer</h4>
+            <div class="stars">
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+            </div>
+            <p>
+              <i class="bi bi-quote quote-icon-left"></i>
+              <span>When I lost access to my Bitrivescribe Ledger Co wallet due to a forgotten passphrase, I was worried. The support team was phenomenal and helped me recover my funds. Bitrivescribe Ledger Co is definitely the most reliable option for secure crypto storage.</span>
+              <i class="bi bi-quote quote-icon-right"></i>
+            </p>
+          </div>
+        </div><!-- End Testimonial Item -->
+
+        <!-- Testimonial Item 4 -->
+        <div class="swiper-slide">
+          <div class="testimonial-item">
+            <img src="{% static 'assets/img/testimonials/testimonials-4.jpg'%}" class="testimonial-img" alt="">
+            <h3>Tom R.</h3>
+            <h4>Crypto Trader</h4>
+            <div class="stars">
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+            </div>
+            <p>
+              <i class="bi bi-quote quote-icon-left"></i>
+              <span>Using Bitrivescribe Ledger Co has kept my trading strategy safe and secure. I’ve never had a worry about losing my funds, and when I did lose access due to a technical issue, Bitrivescribe Ledger Co’s recovery tools worked seamlessly.</span>
+              <i class="bi bi-quote quote-icon-right"></i>
+            </p>
+          </div>
+        </div><!-- End Testimonial Item -->
+
+        <!-- Testimonial Item 5 -->
+        <div class="swiper-slide">
+          <div class="testimonial-item">
+            <img src="{% static 'assets/img/testimonials/testimonials-5.jpg'%}" class="testimonial-img" alt="">
+            <h3>Michael P.</h3>
+            <h4>Digital Asset Investor</h4>
+            <div class="stars">
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+            </div>
+            <p>
+              <i class="bi bi-quote quote-icon-left"></i>
+              <span>As someone with significant investments in crypto, I rely on Bitrivescribe Ledger Co for secure, offline storage. When my funds were accidentally sent to the wrong address, Bitrivescribe Ledger Co’s advanced recovery process helped me reclaim them. Excellent service!</span>
+              <i class="bi bi-quote quote-icon-right"></i>
+            </p>
+          </div>
+        </div><!-- End Testimonial Item -->
+
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+
+  </div>
+
+</section><!-- /Testimonials Section -->
+
+<!-- Faq 2 Section -->
+<section id="faq-2" class="faq-2 section light-background">
+
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Frequently Asked Questions</h2>
+    <p><b>Find answers to common questions about managing your crypto securely and recovering lost funds with Bitrivescribe Ledger Co. If you need further assistance, our support team is here to help.</b></p>
+  </div><!-- End Section Title -->
+
+  <div class="container">
+
+    <div class="row justify-content-center">
+
+      <div class="col-lg-10">
+
+        <div class="faq-container">
+
+          <div class="faq-item faq-active" data-aos="fade-up" data-aos-delay="200">
+            <i class="faq-icon bi bi-question-circle"></i>
+            <h3>What types of cryptocurrencies and assets can I store on Bitrivescribe Ledger Co?</h3>
+            <div class="faq-content">
+              <p>Bitrivescribe Ledger Co allows you to securely store and manage a variety of cryptocurrencies, including Bitcoin, Ethereum, and other altcoins. You can also manage your NFTs and other digital assets, ensuring comprehensive protection for all your investments.</p>
+            </div>
+            <i class="faq-toggle bi bi-chevron-right"></i>
+          </div><!-- End Faq item-->
+
+          <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
+            <i class="faq-icon bi bi-question-circle"></i>
+            <h3>How can I link or connect my wallet to secure my assets?</h3>
+            <div class="faq-content">
+              <p>To link your wallet and secure your assets, click on "Secure Wallet" in your Bitrivescribe Ledger Co dashboard. You will be prompted to enter your wallet’s recovery phrase. Once you've securely linked your wallet, your assets will be safely stored and ready for tracking and management.</p>
+            </div>
+            <i class="faq-toggle bi bi-chevron-right"></i>
+          </div><!-- End Faq item-->
+          
+
+          <div class="faq-item" data-aos="fade-up" data-aos-delay="400">
+            <i class="faq-icon bi bi-question-circle"></i>
+            <h3>Can I track the performance of my cryptocurrency portfolio over time with Bitrivescribe Ledger Co?</h3>
+            <div class="faq-content">
+              <p>Yes, Bitrivescribe Ledger Co provides real-time tracking of your crypto portfolio, displaying performance metrics and trends. You can easily monitor changes in the value of your assets and view detailed performance charts for informed decision-making.</p>
+            </div>
+            <i class="faq-toggle bi bi-chevron-right"></i>
+          </div><!-- End Faq item-->
+
+          <div class="faq-item" data-aos="fade-up" data-aos-delay="500">
+            <i class="faq-icon bi bi-question-circle"></i>
+            <h3>Is my financial and crypto data secure on Bitrivescribe Ledger Co?</h3>
+            <div class="faq-content">
+              <p>Absolutely. At Bitrivescribe Ledger Co, we use state-of-the-art encryption and security measures to ensure that your crypto assets and sensitive data remain fully protected. Your private keys and transaction details are stored offline, adding an extra layer of security against hacks.</p>
+            </div>
+            <i class="faq-toggle bi bi-chevron-right"></i>
+          </div><!-- End Faq item-->
+
+          <div class="faq-item" data-aos="fade-up" data-aos-delay="600">
+            <i class="faq-icon bi bi-question-circle"></i>
+            <h3>Can I recover lost funds from my Bitrivescribe Ledger Co if I lose access to my wallet?</h3>
+            <div class="faq-content">
+              <p>Yes, Bitrivescribe Ledger Co offers a robust recovery process. If you lose access to your wallet or forget your passphrase, you can use your recovery seed to restore your funds securely. The recovery process is designed to be straightforward while maintaining the highest level of security.</p>
+            </div>
+            <i class="faq-toggle bi bi-chevron-right"></i>
+          </div><!-- End Faq item-->
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section><!-- /Faq 2 Section -->
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Contact</h2>
+        <p><b>Need help? Contact the Bitrivescribe Ledger Co team for support with your investments and ledger management.</b>
+
+        </p>
+      </div><!-- End Section Title -->
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-5">
+
+            <div class="info-wrap">
+              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
+                <i class="bi bi-geo-alt flex-shrink-0"></i>
+                <div>
+                  <h3>Address</h3>
+                  <p>A108 Adam Street, New York, NY 535022</p>
+                </div>
+              </div><!-- End Info Item -->
+
+              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
+                <i class="bi bi-telephone flex-shrink-0"></i>
+                <div>
+                  <h3>Call Us</h3>
+                  <p>+1 5589 55488 55</p>
+                </div>
+              </div><!-- End Info Item -->
+
+              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
+                <i class="bi bi-envelope flex-shrink-0"></i>
+                <div>
+                  <h3>Email Us</h3>
+                  <p>info@example.com</p>
+                </div>
+              </div><!-- End Info Item -->
+
+              <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d48389.78314118045!2d-74.006138!3d40.710059!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a22a3bda30d%3A0xb89d1fe6bc499443!2sDowntown%20Conference%20Center!5e0!3m2!1sen!2sus!4v1676961268712!5m2!1sen!2sus" frameborder="0" style="border:0; width: 100%; height: 270px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+          </div>
+
+          <div class="col-lg-7">
+            <form action="" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200" id="contactForm">
+              <div class="row gy-4">
+            
+                <div class="col-md-6">
+                  <label for="name-field" class="pb-2">Your Name</label>
+                  <input type="text" name="name" id="name-field" class="form-control" required="">
+                </div>
+            
+                <div class="col-md-6">
+                  <label for="email-field" class="pb-2">Your Email</label>
+                  <input type="email" class="form-control" name="email" id="email-field" required="">
+                </div>
+            
+                <div class="col-md-12">
+                  <label for="subject-field" class="pb-2">Subject</label>
+                  <input type="text" class="form-control" name="subject" id="subject-field" required="">
+                </div>
+            
+                <div class="col-md-12">
+                  <label for="message-field" class="pb-2">Message</label>
+                  <textarea class="form-control" name="message" rows="10" id="message-field" required=""></textarea>
+                </div>
+            
+                <div class="col-md-12 text-center">
+                  <div class="loading">Loading</div>
+                  <!-- Success Message with Bootstrap Alert and Close Button -->
+                  <div id="successMessage" class="alert alert-success alert-dismissible fade show" style="display: none;" role="alert">
+                    <strong>Success!</strong> <span id="successText"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+            
+                  <button type="submit">Send Message</button>
+                </div>
+            
+              </div>
+            </form>
+            
+            
+            <script>
+              document.getElementById('contactForm').addEventListener('submit', function(event) {
+                event.preventDefault();  // Prevent the form from submitting
+            
+                // Get values from form inputs
+                const name = document.getElementById('name-field').value;
+                const email = document.getElementById('email-field').value;
+                const subject = document.getElementById('subject-field').value;
+                const message = document.getElementById('message-field').value;
+            
+                // Construct the success message
+                const successMessageText = `
+                  Name: ${name}<br>
+                  Email: ${email}<br>
+                  Subject: ${subject}<br>
+                  Message: ${message}
+                `;
+                
+                // Set the success message text
+                document.getElementById('successText').innerHTML = successMessageText;
+            
+                // Display the success message
+                const successMessageDiv = document.getElementById('successMessage');
+                successMessageDiv.style.display = 'block';
+            
+                // Optionally clear the form fields after the submission
+                document.getElementById('name-field').value = '';
+                document.getElementById('email-field').value = '';
+                document.getElementById('subject-field').value = '';
+                document.getElementById('message-field').value = '';
+              });
+            </script>
+            
+          </div><!-- End Contact Form -->
+
+        </div>
+
+      </div>
+
+    </section><!-- /Contact Section -->
+
+  </main>
+
+  <footer id="footer" class="footer">
+
+    <div class="footer-newsletter">
+      <div class="container">
+        <div class="row justify-content-center text-center">
+          <div class="col-lg-6">
+            <h4>Stay Updated with Expert Asset Security Insights</h4>
+            <p>Subscribe for the latest updates on secure asset management, crypto protection, and strategies to keep your investments safe and optimized. Stay informed and make confident, secure decisions.</p>
+            <form action="" method="post" class="php-email-form" id="subscribeForm">
+              <div class="newsletter-form">
+                <input type="email" name="email" id="emailInput" required placeholder="Enter your email">
+                <input type="submit" value="Subscribe">
+              </div>
+              <!-- Bootstrap Success Alert with Close Button -->
+              <div id="successMessage" class="alert alert-success alert-dismissible fade show" style="display: none;" role="alert">
+                <strong>Success!</strong> You've successfully subscribed with the email: <span id="subscribedEmail"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+              <div class="loading">Loading</div>
+              <div class="sent-message">Your subscription request has been sent. Thank you!</div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script>
+      document.getElementById('subscribeForm').addEventListener('submit', function(event) {
+        event.preventDefault();  // Prevent the form from submitting
+    
+        // Get the email input value
+        const email = document.getElementById('emailInput').value;
+    
+        // Display the success alert with the email
+        const successMessageDiv = document.getElementById('successMessage');
+        const subscribedEmail = document.getElementById('subscribedEmail');
+        
+        successMessageDiv.style.display = 'block';
+        subscribedEmail.textContent = email;
+    
+        // Optionally clear the input field after successful subscription
+        document.getElementById('emailInput').value = '';
+      });
+    </script>
+    
+    
+
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-lg-4 col-md-6 footer-about">
+          <a href="index.html" class="d-flex align-items-center">
+            <span class="sitename">BITRIVESCRIBE</span>
+          </a>
+          <div class="footer-contact pt-3">
+            <p>A108 Adam Street</p>
+            <p>New York, NY 535022</p>
+            <p class="mt-3"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
+            <p><strong>Email:</strong> <span>info@example.com</span></p>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Navigate</h4>
+          <ul>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Home</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">About us</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Services</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Team</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Our Services</h4>
+          <ul>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Investment Tracking</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Multi-Signature Wallet</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Hardware Wallet</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Goal-Based Planning</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-4 col-md-12">
+          <h4>Follow Us</h4>
+          <p>Stay updated with the latest from Bitrivescribe Ledger Co. Follow us for insights and news on digital assets and blockchain.</p>
+          <div class="social-links d-flex">
+            <a href=""><i class="bi bi-twitter-x"></i></a>
+            <a href=""><i class="bi bi-facebook"></i></a>
+            <a href=""><i class="bi bi-instagram"></i></a>
+            <a href=""><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="container copyright text-center mt-4">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">Bitrivescribe Ledger Co</strong> <span>All Rights Reserved</span></p>
+      <div class="credits">
+        Designed by <a href="#">Bitrivescribe-Tech</a>
+      </div>
+   </div>
+  
+  </footer>
+
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<!-- TELEGRAM CHAT BUTTON -->
+
+  {% include 'bitrive/telegram_button.html' %}
+
+  
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+
+
+  
+
+
+  <!-- Vendor JS Files -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+  <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+  <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/waypoints/noframework.waypoints.js' %}"></script>
+  <script src="{% static 'assets/vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+  
+  <!-- Main JS File -->
+  <script src="{% static 'assets/js/main.js' %}"></script>
+  
+</body>
+
+</html>
