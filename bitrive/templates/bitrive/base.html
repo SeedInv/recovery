@@ -102,8 +102,12 @@
         </div>
       </div>
       <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="200">
-        <img src="{% static 'assets/img/hero-img.png' %}" class="img-fluid animated" alt="Hero Image">
-      </div>
+  <div class="slideshow-container">
+    <img src="{% static 'assets/img/hero-img1.png' %}" class="slide img-fluid animated" alt="Hero Image 1">
+    <!-- <img src="{% static 'assets/img/hero-img2.png' %}" class="slide img-fluid animated" alt="Hero Image 2"> -->
+  </div>
+</div>
+
     </div>
   </div>
 </section><!-- /Hero Section -->
@@ -139,6 +143,12 @@
   background-color: rgba(0, 123, 255, 0.2); /* Slightly darker background on hover */
   cursor: pointer; /* Show pointer cursor when hovering */
 }
+
+
+/* HERO IMAGE SLIDE */
+
+
+
 
 
 </style>
@@ -620,7 +630,7 @@
 
       <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
         <div class="team-member d-flex align-items-start">
-          <div class="pic"><img src="{% static 'assets/img/team/team-1.jpg'%}" class="img-fluid" alt=""></div>
+          <div class="pic"><img src="{% static 'assets/img/team/team-1.jpeg'%}" class="img-fluid" alt=""></div>
           <div class="member-info">
             <h4>Walter White</h4>
             <span>Chief Security Officer (CSO)</span>
@@ -637,7 +647,7 @@
 
       <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
         <div class="team-member d-flex align-items-start">
-          <div class="pic"><img src="{% static 'assets/img/team/team-2.jpg' %}" class="img-fluid" alt=""></div>
+          <div class="pic"><img src="{% static 'assets/img/team/team-2.jpeg' %}" class="img-fluid" alt=""></div>
           <div class="member-info">
             <h4>Sarah Jhonson</h4>
             <span>Chief Technology Officer (CTO)</span>
@@ -654,7 +664,7 @@
 
       <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
         <div class="team-member d-flex align-items-start">
-          <div class="pic"><img src="{% static 'assets/img/team/team-3.jpg'%}" class="img-fluid" alt=""></div>
+          <div class="pic"><img src="{% static 'assets/img/team/team-3.jpeg'%}" class="img-fluid" alt=""></div>
           <div class="member-info">
             <h4>William Anderson</h4>
             <span>Blockchain and Security Expert</span>
@@ -989,7 +999,7 @@
         <!-- Testimonial Item 1 -->
         <div class="swiper-slide">
           <div class="testimonial-item">
-            <img src="{% static 'assets/img/testimonials/testimonials-1.jpg'%}" class="testimonial-img" alt="">
+            <img src="{% static 'assets/img/testimonials/testimonials-1.jpeg'%}" class="testimonial-img" alt="">
             <h3>John M.</h3>
             <h4>Crypto Investor</h4>
             <div class="stars">
@@ -1006,7 +1016,7 @@
         <!-- Testimonial Item 2 -->
         <div class="swiper-slide">
           <div class="testimonial-item">
-            <img src="{% static 'assets/img/testimonials/testimonials-2.jpg'%}" class="testimonial-img" alt="">
+            <img src="{% static 'assets/img/testimonials/testimonials-2.jpeg'%}" class="testimonial-img" alt="">
             <h3>Sarah L.</h3>
             <h4>Crypto Enthusiast</h4>
             <div class="stars">
@@ -1040,7 +1050,7 @@
         <!-- Testimonial Item 4 -->
         <div class="swiper-slide">
           <div class="testimonial-item">
-            <img src="{% static 'assets/img/testimonials/testimonials-4.jpg'%}" class="testimonial-img" alt="">
+            <img src="{% static 'assets/img/testimonials/testimonials-4.jpeg'%}" class="testimonial-img" alt="">
             <h3>Tom R.</h3>
             <h4>Crypto Trader</h4>
             <div class="stars">
@@ -1354,12 +1364,13 @@
         <div class="col-lg-2 col-md-3 footer-links">
           <h4>Our Services</h4>
           <ul>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">Investment Tracking</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Hardware Wallet Security</a></li>
             <li><i class="bi bi-chevron-right"></i> <a href="#">Multi-Signature Wallet</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">Hardware Wallet</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">Goal-Based Planning</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Wallet Recovery Services</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Wallet Management & Security</a></li>
           </ul>
         </div>
+
 
         <div class="col-lg-4 col-md-12">
           <h4>Follow Us</h4>

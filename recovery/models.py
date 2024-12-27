@@ -34,6 +34,7 @@ class Recovery(models.Model):
         ('other', 'Other'),
     ]
     payment_method = models.CharField(choices=PAYMENT_METHOD_CHOICES, max_length=50)
-
+    created_at = models.DateTimeField(auto_now_add=True)  # Automatically set timestamp on creation
+    updated_at = models.DateTimeField(auto_now=True)      # Automatically set timestamp on update
     def __str__(self):
         return f"Recovery request by {self.name}"

