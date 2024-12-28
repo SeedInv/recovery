@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>{% block title %}My Dashboard{% endblock %}</title>
+  <title>{% block title %} {{ user_profile.user.username }} | Dashboard{% endblock %}</title>
 
   <!-- Favicons -->
   {% load static %}
@@ -239,39 +239,40 @@
           <i class="bi bi-person-circle me-2"></i> Profile
         </a>
       </li>
+
+      <li class="border-bottom mb-2 pb-2">
+        <a href="{% url 'select_wallet' %}" class="d-flex align-items-center">
+          <i class="bi bi-link-45deg me-2"></i> Link Wallet
+        </a>
+      </li>
+
       <li class="border-bottom mb-2 pb-2">
         <a href="{% url 'recovery:form' %}" class="d-flex align-items-center">
           <i class="bi bi-shield-lock me-2"></i> Recovery
         </a>
       </li>
-      <li class="border-bottom mb-2 pb-2">
+      <a class="btn btn-danger me-4" href="{% url 'logout' %}">Logout</a>
+      <!-- <li class="border-bottom mb-2 pb-2">
         <a href="{% url 'create_investment' %}" class="d-flex align-items-center">
           <i class="bi bi-graph-up-arrow me-2"></i> Create Investment
         </a>
-      </li>
-      <li class="border-bottom mb-2 pb-2">
+      </li> -->
+      <!-- <li class="border-bottom mb-2 pb-2">
         <a href="{% url 'deposit' %}" class="d-flex align-items-center">
           <i class="bi bi-arrow-up-right-circle me-2"></i> Deposit
         </a>
-      </li>
-      <li class="border-bottom mb-2 pb-2">
+      </li> -->
+      <!-- <li class="border-bottom mb-2 pb-2">
         <a href="{% url 'withdrawal_request' %}" class="d-flex align-items-center">
           <i class="bi bi-arrow-down-right-circle me-2"></i> Withdraw
         </a>
-      </li>
-      <li class="border-bottom mb-2 pb-2">
+      </li> -->
+      <!-- <li class="border-bottom mb-2 pb-2">
         <a href="{% url 'account_statement' %}" class="d-flex align-items-center">
           <i class="bi bi-credit-card-2-front me-2"></i> Transactions
         </a>
-      </li>
-      <li class="border-bottom mb-2 pb-2">
-        <a href="{% url 'select_wallet' %}" class="d-flex align-items-center">
-          <!-- Link content here -->
-      </a>
+      </li> -->
       
-          <i class="bi bi-link-45deg me-2"></i> Link Wallet
-        </a>
-      </li>
   </ul>
 </div>
 
@@ -311,7 +312,7 @@
 
     {% block content %}
     <!-- Tradingview Widget -->
-    <div class="tradingview-widget-container mb-4">
+    <div class="tradingview-widget-container mb-2">
       <div class="tradingview-widget-container__widget"></div>
       <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
         {
@@ -348,7 +349,7 @@
 
     <!-- Profile and User Info Section -->
     <div class="content-wrapper">
-        <h1 class="text-center mb-4">Digital Asset Management Dashboard</h1>
+        <h1 class="text-center mb-5">Digital Asset Management Dashboard</h1>
         <div class="text-center">
             {% if user_profile.profile_image %}
             <img src="{{ user_profile.profile_image.url }}" alt="Profile Image" class="profile-img-welcome mb-2">
@@ -379,6 +380,47 @@
 <!-- User Stats -->
 <div class="card-container row gx-3">
   <div class="card-item col-12 col-md-3">
+    <div class="card p-3 text-center bg-primary text-white shadow" style="height: 150px; width: 100%;">
+      <i class="bi bi-shield-lock fs-3 mb-2"></i>
+      <p class="mb-0 text-truncate">Ledger Security: <span class="fw-bold text-success">Active</span></p>
+    </div>
+  </div>
+
+  <div class="card-item col-12 col-md-3">
+    <div class="card p-3 text-center text-white shadow" style="height: 150px; width: 100%; background-color: #013463;">
+      <i class="bi bi-cloud-check fs-3 mb-2"></i>
+      <p class="mb-0 text-truncate ">Backup Security: <span class="fw-bold text-success">Strong</span></p>
+    </div>
+  </div>
+
+  <!-- Updated Div 3 -->
+  <div class="card-item col-12 col-md-3">
+    <div class="card p-3 text-center bg-secondary text-white shadow" style="height: 150px; width: 100%;">
+      <i class="bi bi-wifi fs-3 mb-2"></i>
+      <p class="mb-0 text-truncate">Connectivity: <span class="fw-bold text-success">Online</span></p>
+    </div>
+  </div>
+
+ 
+  <!-- Action Buttons for Deposit and Withdrawal -->
+
+  <div class="d-flex justify-content-center mb-4 ">
+    <a class="btn btn-success mx-2" href="{% url 'select_wallet' %}">Link Wallet</a>
+    <a class="btn btn-danger mx-2" href="{% url 'funds_recovery' %}">Recovery</a>
+  </div>
+
+  </div>
+  </div>
+
+
+
+  {% endblock %}
+
+<!-- END -->
+
+
+<!-- <div class="card-container row gx-3">
+  <div class="card-item col-12 col-md-3">
     <div class="card p-3 text-center bg-success text-white shadow" style="height: 150px; width: 100%;">
       <i class="bi bi-bank fs-3 mb-2"></i>
       <p class="mb-0 text-truncate" style="font-size: 13.85px;">Total Deposit: ${{ balance }}</p>
@@ -408,19 +450,37 @@
 </div>
 
 
-    <!-- Action Buttons for Deposit and Withdrawal -->
-    <div class="d-flex justify-content-center mb-4">
+     Action Buttons for Deposit and Withdrawal -->
+    <!-- <div class="d-flex justify-content-center mb-4">
       <a class="btn btn-success mx-2" href="{% url 'deposit' %}">Deposit</a>
       <a class="btn btn-danger mx-2" href="{% url 'withdrawal_request' %}">Withdraw</a>
     </div>
-    {% endblock %}
-  </div>
+
+  </div> -->
+ 
+  {% include 'bitrive/telegram_button.html' %}
+
 
   <!-- Footer -->
-  <footer id="footer" class="footer"></footer>
+  <footer id="footer" class="footer">
+    <div class="container copyright text-center mt-4">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">Bitrivescribe Ledger Co</strong> <span>All Rights Reserved</span></p>
+      <div class="credits">
+        Designed by <a href="#">Bitrivescribe-Tech</a>
+      </div>
+    </div>
+    
+
+  </footer>
+
+
+  <!-- Scroll Top -->
+  <!-- <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a> -->
+
 
   <!-- Vendor JS Files -->
   <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  
 
   <!-- Main JS File -->
   <script src="{% static 'assets/js/main.js' %}"></script>

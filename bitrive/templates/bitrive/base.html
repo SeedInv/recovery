@@ -38,10 +38,10 @@
 <header id="header" class="header d-flex align-items-center sticky-top">
   <div class="container-fluid container-xl position-relative d-flex align-items-center">
     <a href="{% url 'home' %}" class="logo d-flex align-items-center me-auto">
-      <!-- Uncomment the line below if you also wish to use an image logo -->
       <img src="{% static 'assets/img/logo.png' %}" alt="">
-      <!-- <h1 class="sitename">BITRIVESCRIBE LEDGER CO</h1> -->
-    </a>
+      <span class="sitename text-white d-none d-lg-inline" style="font-size:15px;">B<sup  style="color: #47b2e4;">I</sup>TRIVESCRIBE<span> <span style="color: #47b2e4;">LEDGER</span></span> CO</span>
+  </a>
+  
 
     <nav id="navmenu" class="navmenu">
       <ul>
@@ -1341,7 +1341,7 @@
       <div class="row gy-4">
         <div class="col-lg-4 col-md-6 footer-about">
           <a href="index.html" class="d-flex align-items-center">
-            <span class="sitename">BITRIVESCRIBE</span>
+            <span class="sitename" style="font-size: large;"><h6>B<sup>I</sup>TRIVESCRIBE LEDGER CO</h6></span>
           </a>
           <div class="footer-contact pt-3">
             <p>A108 Adam Street</p>
@@ -1413,7 +1413,7 @@
 
 
   <!-- Vendor JS Files -->
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
   <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
   <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
