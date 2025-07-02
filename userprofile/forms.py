@@ -8,16 +8,39 @@ from django_countries.fields import CountryField
 from django.contrib.auth import authenticate
 
 
+
 class RegistrationForm(UserCreationForm):
-    first_name = forms.CharField(max_length=100, required=True, widget=forms.TextInput(attrs={'placeholder': 'Enter your first name'}))
-    last_name = forms.CharField(max_length=100, required=True, widget=forms.TextInput(attrs={'placeholder': 'Enter your last name'}))
-    username = forms.CharField(max_length=150, required=True, help_text="Enter a unique username.")
-    email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'placeholder': 'Enter your email address'}))
-    phone_number = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder': 'Enter your phone number'}))
-    profile_image = forms.ImageField(required=False, widget=forms.ClearableFileInput(attrs={'placeholder': 'Upload your profile image'}))
-    wallet_address = forms.CharField(max_length=255, required=True, widget=forms.TextInput(attrs={'placeholder': 'Enter your wallet address'}))
-    country = CountryField(blank_label='(Select Country)').formfield(required=True, widget=forms.Select())
-    address = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Enter your address', 'rows': 3}), required=False)
+    first_name = forms.CharField(
+        max_length=100,
+        required=True,
+        widget=forms.TextInput(attrs={'placeholder': 'Enter your first name'})
+    )
+    last_name = forms.CharField(
+        max_length=100,
+        required=True,
+        widget=forms.TextInput(attrs={'placeholder': 'Enter your last name'})
+    )
+    username = forms.CharField(
+        max_length=150,
+        required=True,
+        help_text="Enter a unique username."
+    )
+    email = forms.EmailField(
+        required=True,
+        widget=forms.EmailInput(attrs={'placeholder': 'Enter your email address'})
+    )
+    phone_number = forms.CharField(
+        required=True,
+        widget=forms.TextInput(attrs={'placeholder': 'Enter your phone number'})
+    )
+    country = CountryField(blank_label='(Select Country)').formfield(
+        required=True,
+        widget=forms.Select()
+    )
+    address = forms.CharField(
+        widget=forms.Textarea(attrs={'placeholder': 'Enter your address', 'rows': 3}),
+        required=False
+    )
 
     class Meta:
         model = User
@@ -48,17 +71,15 @@ class RegistrationForm(UserCreationForm):
         if commit:
             user.save()
 
+        # Save related profile info
         user_profile, created = UserProfile.objects.get_or_create(user=user)
         user_profile.phone_number = self.cleaned_data.get('phone_number')
-        user_profile.profile_image = self.cleaned_data.get('profile_image')
-        user_profile.wallet_address = self.cleaned_data.get('wallet_address')
         user_profile.country = self.cleaned_data.get('country')
         user_profile.address = self.cleaned_data.get('address')
         if commit:
             user_profile.save()
 
         return user
-
 
 
 

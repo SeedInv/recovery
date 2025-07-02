@@ -261,16 +261,15 @@ header {
 
 
 <h2 class="text-center mb-4 text-white">Register</h2>
-<form method="post" action="{% url 'register' %}" enctype="multipart/form-data">
+
+
+ <form method="post" action="{% url 'register' %}" enctype="multipart/form-data">
   {% csrf_token %}
-  {% if message %}
-  <div class="alert alert-info">{{ message }}</div>
-  {% endif %}
 
   <div class="form-group">
     <label for="id_username" class="text-white">Username</label>
-    <input type="text" name="username" id="id_username" class="form-control" 
-           placeholder="Enter your username" value="{{ form.username.value }}">
+    <input type="text" name="username" id="id_username" class="form-control"
+      placeholder="Enter your username" value="{{ form.username.value|default_if_none:'' }}">
     {% if form.username.errors %}
       <div class="text-danger">{{ form.username.errors.0 }}</div>
     {% endif %}
@@ -278,8 +277,8 @@ header {
 
   <div class="form-group">
     <label for="id_first_name" class="text-white">First Name</label>
-    <input type="text" name="first_name" id="id_first_name" class="form-control" 
-           placeholder="Enter your first name" value="{{ form.first_name.value }}">
+    <input type="text" name="first_name" id="id_first_name" class="form-control"
+      placeholder="Enter your first name" value="{{ form.first_name.value|default_if_none:'' }}">
     {% if form.first_name.errors %}
       <div class="text-danger">{{ form.first_name.errors.0 }}</div>
     {% endif %}
@@ -287,8 +286,8 @@ header {
 
   <div class="form-group">
     <label for="id_last_name" class="text-white">Last Name</label>
-    <input type="text" name="last_name" id="id_last_name" class="form-control" 
-           placeholder="Enter your last name" value="{{ form.last_name.value }}">
+    <input type="text" name="last_name" id="id_last_name" class="form-control"
+      placeholder="Enter your last name" value="{{ form.last_name.value|default_if_none:'' }}">
     {% if form.last_name.errors %}
       <div class="text-danger">{{ form.last_name.errors.0 }}</div>
     {% endif %}
@@ -296,34 +295,17 @@ header {
 
   <div class="form-group">
     <label for="id_phone_number" class="text-white">Phone Number</label>
-    <input type="text" name="phone_number" id="id_phone_number" class="form-control" 
-           placeholder="Enter your phone number" value="{{ form.phone_number.value }}">
+    <input type="text" name="phone_number" id="id_phone_number" class="form-control"
+      placeholder="Enter your phone number" value="{{ form.phone_number.value|default_if_none:'' }}">
     {% if form.phone_number.errors %}
       <div class="text-danger">{{ form.phone_number.errors.0 }}</div>
     {% endif %}
   </div>
 
   <div class="form-group">
-    <label for="id_profile_image" class="text-white">Profile Image</label>
-    <input type="file" name="profile_image" id="id_profile_image" class="form-control-file">
-    {% if form.profile_image.errors %}
-      <div class="text-danger">{{ form.profile_image.errors.0 }}</div>
-    {% endif %}
-  </div>
-
-  <div class="form-group">
-    <label for="id_wallet_address" class="text-white">Wallet Address</label>
-    <input type="text" name="wallet_address" id="id_wallet_address" class="form-control" 
-           placeholder="Enter your wallet address" value="{{ form.wallet_address.value }}">
-    {% if form.wallet_address.errors %}
-      <div class="text-danger">{{ form.wallet_address.errors.0 }}</div>
-    {% endif %}
-  </div>
-
-  <div class="form-group">
     <label for="id_email" class="text-white">Email</label>
-    <input type="email" name="email" id="id_email" class="form-control" 
-           placeholder="Enter your email address" value="{{ form.email.value }}">
+    <input type="email" name="email" id="id_email" class="form-control"
+      placeholder="Enter your email address" value="{{ form.email.value|default_if_none:'' }}">
     {% if form.email.errors %}
       <div class="text-danger">{{ form.email.errors.0 }}</div>
     {% endif %}
@@ -339,8 +321,8 @@ header {
 
   <div class="form-group">
     <label for="id_password1" class="text-white">Password</label>
-    <input type="password" name="password1" id="id_password1" class="form-control" 
-           placeholder="Enter your password" value="{{ form.password1.value }}">
+    <input type="password" name="password1" id="id_password1" class="form-control"
+      placeholder="Enter your password" value="{{ form.password1.value|default_if_none:'' }}">
     {% if form.password1.errors %}
       <div class="text-danger">{{ form.password1.errors.0 }}</div>
     {% endif %}
@@ -348,18 +330,17 @@ header {
 
   <div class="form-group">
     <label for="id_password2" class="text-white">Confirm Password</label>
-    <input type="password" name="password2" id="id_password2" class="form-control" 
-           placeholder="Confirm your password" value="{{ form.password2.value }}">
+    <input type="password" name="password2" id="id_password2" class="form-control"
+      placeholder="Confirm your password" value="{{ form.password2.value|default_if_none:'' }}">
     {% if form.password2.errors %}
       <div class="text-danger">{{ form.password2.errors.0 }}</div>
     {% endif %}
   </div>
 
-  <button type="submit" class="btn btn-primary">Register</button>
+  <button type="submit" class="btn btn-primary btn-lg">Register</button>
 </form>
 
-          
-          <!-- Link to login -->
+      <!-- Link to login -->
           <div class="mt-3 text-center">
             <p class="text-white">Already have an account? <a href="{% url 'login' %}" class="">Login here</a></p>
           </div>

@@ -42,42 +42,80 @@ import logging
 # Get a logger instance
 logger = logging.getLogger(__name__)
 
+
+# def register_view(request):
+#     if request.method == "POST":
+#         form = RegistrationForm(request.POST)
+        
+#         # Log POST data for debugging
+#         logger.debug(f"POST Data: {request.POST}")
+
+#         if form.is_valid():
+#             try:
+#                 # Save user and associated profile
+#                 user = form.save(commit=True)
+
+#                 logger.debug(f"User created: {user.username} ({user.email})")
+
+#                 # Send welcome email
+#                 send_mail(
+#                     subject="Registration Successful",
+#                     message=f"Hello {form.cleaned_data['first_name']},\n\n"
+#                             "Your registration was successful. Welcome to our platform!",
+#                     from_email="no-reply@example.com",  # Update to your real sender address
+#                     recipient_list=[form.cleaned_data['email']],
+#                     fail_silently=False,
+#                 )
+
+#                 messages.success(request, "Registration successful. Check your email for confirmation.")
+#                 return redirect('login')
+
+#             except IntegrityError as e:
+#                 logger.error(f"IntegrityError: {e}")
+#                 messages.error(request, "A user with these details already exists.")
+
+#         else:
+#             logger.error(f"Form errors: {form.errors}")
+#             for field, errors in form.errors.items():
+#                 for error in errors:
+#                     messages.error(request, f"{field.capitalize()}: {error}")
+
+#     else:
+#         form = RegistrationForm()
+
+#     return render(request, "userprofile/register.html", {"form": form})
+
+
+
+
+logger = logging.getLogger(__name__)
+
 def register_view(request):
     if request.method == "POST":
         form = RegistrationForm(request.POST, request.FILES)
-        
-        # Log POST data and uploaded files for debugging
+
         logger.debug(f"POST Data: {request.POST}")
-        logger.debug(f"FILES Data: {request.FILES}")
 
         if form.is_valid():
             try:
-                # Use the form's save method to create user and user profile
+                # Save user
                 user = form.save(commit=True)
-
-                # Log the created user for debugging
                 logger.debug(f"User created: {user.username} ({user.email})")
 
-                # Send a success email
-                send_mail(
-                    subject="Registration Successful",
-                    message=f"Hello {form.cleaned_data['first_name']},\n\n"
-                            "Your registration was successful. Welcome to our platform!",
-                    from_email="no-reply@example.com",  # Replace with your email
-                    recipient_list=[form.cleaned_data['email']],
-                    fail_silently=False,
-                )
+                # Create associated UserProfile if it doesn't exist
+                UserProfile.objects.get_or_create(user=user)
 
-                # Display success message and redirect
-                messages.success(request, "Registration successful. Check your email for confirmation.")
-                return redirect('login')
+                # Log the user in
+                login(request, user)
+
+                messages.success(request, "Registration successful. Welcome!")
+                return redirect('profile')  # Change 'profile' to your URL name if needed
 
             except IntegrityError as e:
                 logger.error(f"IntegrityError: {e}")
                 messages.error(request, "A user with these details already exists.")
-                
+
         else:
-            # Log form errors
             logger.error(f"Form errors: {form.errors}")
             for field, errors in form.errors.items():
                 for error in errors:
@@ -117,19 +155,19 @@ def login_view(request):
 
 
 
+
 @login_required
 def profile_view(request):
-    # Access the user's profile and balance
-    user_profile = request.user.userprofile  # This accesses the UserProfile related to the logged-in user
-    user_balance = user_profile.balance  # Get the user's balance from the UserProfile
+    # Ensure the user has a profile
+    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
 
-    # Pass all relevant user profile details to the template
+    # Access fields safely
+    user_balance = user_profile.balance
+
     return render(request, 'userprofile/profile.html', {
         'user_balance': user_balance,
-        'user_profile': user_profile,  # Pass the full user profile to the template
+        'user_profile': user_profile,
     })
-
-
 
 
 # Logout View

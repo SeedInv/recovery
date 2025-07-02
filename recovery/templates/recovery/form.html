@@ -11,13 +11,11 @@
   <meta name="keywords" content="">
 
   <!-- Favicons -->
-   {% load static %}
   <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
   <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
 
   <!-- Fonts -->
   <link href="{% static 'assets/css/googlefonts.css' %}" rel="stylesheet">
-
 
   <!-- Vendor CSS Files -->
   <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -34,13 +32,10 @@
 <body class="portfolio-details-page">
 
   <!-- Header -->
-<!-- Header -->
 <header id="header" class="header d-flex align-items-center sticky-top">
   <div class="container-fluid container-xl position-relative d-flex align-items-center">
     <a href="{% url 'home' %}" class="logo d-flex align-items-center me-auto">
-      <!-- Uncomment the line below if you also wish to use an image logo -->
       <img src="{% static 'assets/img/logo.png' %}" alt="">
-      <!-- <h1 class="sitename">BITRIVESCRIBE LEDGER CO</h1> -->
     </a>
 
     <nav id="navmenu" class="navmenu">
@@ -199,14 +194,14 @@
 <!-- Form Wrapper -->
 <div class="form-container" id="form-container">
   <!-- FORM SUCCESS MESSAGE -->
-  {% if messages %}  
+  {% if messages %}
   <div class="mt-3">
-      {% for message in messages %}
-          <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-              {{ message }}
-              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-      {% endfor %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
   </div>
   {% endif %}
 
@@ -252,147 +247,62 @@
         {{ form.payment_method }}
       </div>
       <button type="button" class="btn btn-secondary w-100 mt-3" onclick="prevStep(0)">Back</button>
-      <button type="button" class="btn text-white w-100 mt-3" style="background-color: #47b2e4;" onclick="nextStep()">Next</button>
-    </div>
-
-    <!-- Step 2: Select Wallet -->
-    <div class="form-step" id="step-2">
-      <h3>Step 2: Select Wallet</h3>
-      <div class="form-group">
-        <label>Select Your Wallet:</label>
-        <div class="wallet-options">
-          {% for wallet in form.wallet.field.queryset %}
-          <div class="wallet-item">
-            <label>
-              <input type="radio" name="wallet" value="{{ wallet.id }}" required>
-              {% if wallet.icon %}
-              <img src="{{ wallet.icon.url }}" alt="{{ wallet.name }}" class="wallet-icon">
-              {% else %}
-              <img src="/static/default_icon.png" alt="Default Icon" class="wallet-icon">
-              {% endif %}
-              <span class="wallet-name">{{ wallet.name }}</span>
-            </label>
-          </div>
-          {% endfor %}
-        </div>
-      </div>
-      <button type="button" class="btn btn-secondary w-100 mt-3" onclick="prevStep(1)">Back</button>
-      <button type="button" class="btn text-white w-100 mt-3" style="background-color: #47b2e4;" onclick="nextStep()">Next</button>
-    </div>
-
-    <!-- Step 3: Enter Wallet Address -->
-    <div class="form-step" id="step-3">
-      <h3>Step 3: Enter Your Wallet Address</h3>
-      <div class="form-group mb-3">
-        <label for="id_wallet_address">Wallet Address:</label>
-        {{ form.wallet_address }}
-      </div>
-      <button type="button" class="btn btn-secondary w-100 mt-3" onclick="prevStep(2)">Back</button>
-      <button type="button" class="btn text-white w-100 mt-3" style="background-color: #47b2e4;" onclick="nextStep()">Next</button>
-    </div>
-
-    <!-- Step 4: Recovery Information -->
-    <div class="form-step" id="step-4">
-      <h3>Step 4: Recovery Information</h3>
-      <div class="form-group mb-3">
-        <label for="id_recovery_phrase">Enter Recovery Phrase:</label>
-        {{ form.recovery_phrase }}
-      </div>
-      <button type="button" class="btn btn-secondary w-100 mt-3" onclick="prevStep(3)">Back</button>
       <button type="submit" class="btn text-white w-100 mt-3" style="background-color: #47b2e4;">Submit Recovery Request</button>
     </div>
+
   </form>
 </div>
 
 <script>
-let currentStep = 0; // Initial step
+  let currentStep = 0; // Initial step
+  const totalSteps = 2; // Only step-0 and step-1 remain
 
-// Function to show the progress bar and form step
-function showStep(stepIndex) {
-    const steps = document.querySelectorAll('.form-step');
+  document.getElementById('reveal-btn').addEventListener('click', function() {
+    this.style.display = 'none';
+    document.getElementById('form-container').style.display = 'block';
+  });
+
+  function showStep(step) {
+    // Hide all steps
+    for (let i = 0; i < totalSteps; i++) {
+      document.getElementById(`step-${i}`).classList.remove('form-step-active');
+    }
+    // Show current step
+    document.getElementById(`step-${step}`).classList.add('form-step-active');
+
+    // Update progress bar percentage (0%, 50%, 100%)
+    const progressPercent = (step / (totalSteps - 1)) * 100;
     const progressBar = document.getElementById('progress-bar');
+    progressBar.style.width = progressPercent + '%';
+    progressBar.setAttribute('aria-valuenow', progressPercent);
+  }
 
-    // Hide all steps and show the active step
-    steps.forEach((step, index) => {
-        step.classList.remove('form-step-active');
-        if (index === stepIndex) {
-            step.classList.add('form-step-active');
-        }
-    });
+  function nextStep() {
+    if (currentStep < totalSteps - 1) {
+      currentStep++;
+      showStep(currentStep);
+    }
+  }
 
-    // Update the progress bar width
-    const progressPercentage = ((stepIndex + 1) / steps.length) * 100;
-    progressBar.style.width = progressPercentage + '%';
-    progressBar.setAttribute('aria-valuenow', progressPercentage);
-}
-
-// Function to go to the next step
-function nextStep() {
-    currentStep++;
+  function prevStep(step) {
+    currentStep = step;
     showStep(currentStep);
-}
+  }
 
-// Function to go to the previous step
-function prevStep(prevStepIndex) {
-    currentStep = prevStepIndex;
-    showStep(prevStepIndex);
-}
-
-// Initialize the first step and progress bar
-showStep(0);
-
-// Reveal/Hide the hidden form (if applicable)
-document.addEventListener("DOMContentLoaded", function () {
-    const revealButton = document.getElementById("reveal-btn");
-    const formContainer = document.getElementById("form-container");
-
-    revealButton.addEventListener("click", function () {
-        if (formContainer.style.display === "none" || formContainer.style.display === "") {
-            formContainer.style.display = "block";
-            revealButton.textContent = "Ready";  // Change button text 
-        } else {
-            formContainer.style.display = "none";
-            revealButton.textContent = "Proceed to claim";  // Change button text 
-        }
-    });
-});
+  // Initialize the first step view and progress
+  showStep(currentStep);
 </script>
-
- <!-- Footer -->
- <footer id="footer" class="footer">
-
-  </div>
-
-  <div class="container copyright text-center mt-4">
-    <p>© <span>Copyright</span> <strong class="px-1 sitename">Bitrivescribe Ledger Co</strong> <span>All Rights Reserved</span></p>
-    <div class="credits">
-      Designed by <a href="#">Bitrivescribe-Tech</a>
-    </div>
- </div>
- 
-</footer>
-
-<!-- Scroll Top -->
-<a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-
-
-<!-- TELEGRAM CHAT BUTTON -->
-
-{% include 'bitrive/telegram_button.html' %}
-
-<!-- Preloader -->
-<div id="preloader"></div>
 
 <!-- Vendor JS Files -->
 <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-<script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
 <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
 <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
-<script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
-<script src="{% static 'assets/vendor/waypoints/noframework.waypoints.js' %}"></script>
-<script src="{% static 'assets/vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
 <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+<script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
 
 <!-- Main JS File -->
 <script src="{% static 'assets/js/main.js' %}"></script>
+</body>
+
+</html>
